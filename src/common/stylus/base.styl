@@ -1,0 +1,24 @@
+@import "variable.styl"
+
+body, html
+  line-height: 1
+  font-family: 'PingFang SC', 'STHeitiSC-Light', 'Helvetica-Light', arial, sans-serif, 'Droid Sans Fallback'
+  user-select: none
+  -webkit-tap-highlight-color: transparent
+  background: $color-background
+  color: $color-text
+  height: 100%
+  .mu-text-field.disabled
+    .mu-text-field-content
+      color: rgba(255, 255, 255, 0.3)!important
+  .mu-dialog
+    position: relative
+    height: 80%!important
+    overflow-y: auto!important
+    max-width: 1250px
+    width: 78%
+    .search-item
+      display: flex
+      align-items: center
+      .item
+        margin-left: 5px

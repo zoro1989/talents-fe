@@ -34,138 +34,163 @@
     </mu-table>
     <mu-pagination :total="tableData.totalCount" :current="tableData.pageNo" @pageChange="pageChange">
     </mu-pagination>
+    <tkm-loading ref="loading"></tkm-loading>
+    <tkm-message ref="message" :message="message"></tkm-message>
   </div>
 </template>
 
 <script>
-import isNotEmpty from 'utilities/is-not-empty'
-export default{
-  created () {
-    if (this.searchOperations.length > 0) {
-      this.searchOperations.map((opt) => {
-        if (opt.type === 'normal') {
-          opt.color = '#337ab7'
-        } else if (opt.type === 'delete') {
-          opt.color = '#a2d200'
-        } else {
-          opt.color = '#1ccdaa'
-        }
-        return opt
+  import TkmLoading from 'components/tkm-loading'
+  import TkmMessage from 'components/tkm-message'
+  import isNotEmpty from 'utilities/is-not-empty'
+  export default{
+    components: {
+      TkmLoading,
+      TkmMessage
+    },
+    created () {
+      if (this.searchOperations.length > 0) {
+        this.searchOperations.map((opt) => {
+          if (opt.type === 'normal') {
+            opt.color = '#337ab7'
+          } else if (opt.type === 'delete') {
+            opt.color = '#a2d200'
+          } else {
+            opt.color = '#1ccdaa'
+          }
+          return opt
+        })
+      }
+      this.$nextTick(() => {
+        this.loadTable()
       })
-    }
-    this.loadTable()
-  },
+    },
   props: {
-    headers: {},
-    tableData: {},
-    searchOperations: {
-      type: Array,
-      default: function () {
-        return []
+      headers: {},
+      tableData: {},
+      searchOperations: {
+        type: Array,
+        default: function () {
+          return []
+        }
+      },
+      hasSearchBox: {
+        type: Boolean,
+        default: true
       }
     },
-    hasSearchBox: {
-      type: Boolean,
-      default: true
-    }
-  },
-  data () {
-    return {
-      fixedHeader: true,
-      selectable: true,
-      showCheckbox: false,
-      multiSelectable: true,
-      selectedAll: false,
-      totalCount: 1,
-      pageNo: 1,
-      height: '70vh',
-      form: {
-        findContent: ''
-      }
-    }
-  },
-  watch: {
-    '$route' (to, from) {
-      // 对路由变化作出响应...
-      if (to.name === 'points') {
-        this.routeChange(to)
+    data () {
+      return {
+        fixedHeader: true,
+        selectable: true,
+        showCheckbox: false,
+        multiSelectable: true,
+        selectedAll: false,
+        totalCount: 1,
+        pageNo: 1,
+        height: '70vh',
+        form: {
+          findContent: ''
+        },
+        message: ''
       }
     },
-    selectedAll: function (newValue, oldValue) {
-      if (isNotEmpty(newValue)) {
-        if (newValue) {
-          this.tableData.rows.map((row) => {
-            row.selected = true
-          })
-        } else {
-          this.tableData.rows.map((row) => {
-            row.selected = false
-          })
+    watch: {
+      '$route' (to, from) {
+        // 对路由变化作出响应...
+        if (to.name === 'points') {
+          this.routeChange(to)
+        }
+      },
+      selectedAll: function (newValue, oldValue) {
+        if (isNotEmpty(newValue)) {
+          if (newValue) {
+            this.tableData.rows.map((row) => {
+              row.selected = true
+            })
+          } else {
+            this.tableData.rows.map((row) => {
+              row.selected = false
+            })
+          }
         }
       }
-    }
-  },
-  methods: {
-    routeChange (to) {
-      let success = (msg) => {
-        this.showSuccess(msg)
-      }
-      let fail = (err) => {
-        this.showError(err)
-      }
-      this.$emit('route-change', { pageNo: this.pageNo, findContent: this.form.findContent }, to, success, fail)
     },
-    loadTable () {
-      let success = (msg) => {
-        this.showSuccess(msg)
-      }
-      let fail = (err) => {
-        this.showError(err)
-      }
-      this.$emit('init-data', { pageNo: this.pageNo, findContent: this.form.findContent }, success, fail)
-    },
-    optHandler (action, row) {
-      let success = (msg) => {
-        this.showSuccess(msg)
+    methods: {
+      routeChange (to) {
+        let success = (msg) => {
+          this.showSuccess(msg)
+        }
+        let fail = (err) => {
+          this.showError(err)
+        }
+        this.$emit('route-change', { pageNo: this.pageNo, findContent: this.form.findContent }, to, success, fail)
+      },
+      loadTable () {
+        this.$refs.loading.show()
+        let success = (msg) => {
+          this.showSuccess(msg)
+        }
+        let fail = (err) => {
+          this.showError(err)
+        }
+        this.$emit('init-data', { pageNo: this.pageNo, findContent: this.form.findContent }, success, fail)
+      },
+      optHandler (action, row) {
+        let success = (msg) => {
+          this.showSuccess(msg)
+          this.loadTable()
+        }
+        let fail = (err) => {
+          this.showError(err)
+        }
+        this.$emit('rows-operation', action, row, success, fail)
+      },
+      searchOptHandler (action, row) {
+        let success = (msg) => {
+          this.showSuccess(msg)
+          this.loadTable()
+        }
+        let fail = (err) => {
+          this.showError(err)
+        }
+        this.$emit('search-operation', action, success, fail)
+      },
+      pageChange (newIndex) {
+        this.pageNo = newIndex
         this.loadTable()
-      }
-      let fail = (err) => {
-        this.showError(err)
-      }
-      this.$emit('rows-operation', action, row, success, fail)
-    },
-    searchOptHandler (action, row) {
-      let success = (msg) => {
-        this.showSuccess(msg)
-        this.loadTable()
-      }
-      let fail = (err) => {
-        this.showError(err)
-      }
-      this.$emit('search-operation', action, success, fail)
-    },
-    pageChange (newIndex) {
-      this.pageNo = newIndex
-      this.loadTable()
-    },
-    rowClick (index, tr) {
-      this.tableData.rows[index].selected = !this.tableData.rows[index].selected
-    },
-    showSuccess (msg) {
-      if (msg) {
-//        this.$message({
-//          message: msg,
-//          type: 'success'
-//        })
-      }
-    },
-    showError (msg) {
-      if (msg) {
-//        this.$message.error(msg)
+      },
+      rowClick (index, tr) {
+        this.tableData.rows[index].selected = !this.tableData.rows[index].selected
+      },
+      showSuccess (msg) {
+        if (msg) {
+  //        this.$message({
+  //          message: msg,
+  //          type: 'success'
+  //        })
+          this.$nextTick(() => {
+            this.message = msg
+          })
+        }
+        this.$nextTick(() => {
+          this.$refs.loading.hide()
+        })
+      },
+      showError (msg) {
+        if (msg) {
+          this.$nextTick(() => {
+            this.message = msg
+            this.$refs.message.show()
+          })
+        }
+        //        this.$message.error(msg)
+        this.$nextTick(() => {
+          this.$refs.loading.hide()
+        })
       }
     }
   }
-}
 
 </script>
 

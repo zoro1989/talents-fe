@@ -21,12 +21,14 @@ export default {
       } catch (e) {
         console.log('JSON解析异常')
       }
+      // vm.$refs.loading.hide()
     }
   },
-  error: function (error) {
+  error: function (error, vm) {
     return (err) => {
       console.log(err)
       error && error(err)
+      // vm.$refs.loading.hide()
     }
   }
 }

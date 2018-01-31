@@ -46,6 +46,7 @@ export default{
     initData (params, success, fail) {
       memberList.getList.bind(this)({findContent: params.findContent, pageNo: params.pageNo}, (data) => {
         this.tableData = data
+        success(data.message)
       }, (err) => {
         fail(err)
       })

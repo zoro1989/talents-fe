@@ -106,18 +106,21 @@
         </div>
       </div>
     </mu-list-item>
-    <section class="button-group">
+    <div class="button-group">
       <mu-raised-button label="搜索"  @click="onSearch" primary/>
-    </section>
+    </div>
+    <tkm-loading></tkm-loading>
   </div>
 </template>
 
 <script>
 import talentsSearch from 'service/talents-search'
 import TkmSelect from 'components/tkm-select'
+import TkmLoading from 'components/tkm-loading'
 export default{
   components: {
-    TkmSelect
+    TkmSelect,
+    TkmLoading
   },
   created () {
     talentsSearch.get.bind(this)({}, (data) => {
@@ -168,4 +171,6 @@ export default{
         align-items: flex-end
         .item
           margin-left: 10px
+    .button-group
+      margin-top: 20px
 </style>

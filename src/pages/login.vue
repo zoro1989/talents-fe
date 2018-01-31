@@ -22,12 +22,17 @@
       <mu-raised-button label="登录" @click="onSubmit" class="login-btn"/>
       <mu-raised-button label="注册" @click="onRegister" class="register-btn" />
     </div>
+    <tkm-loading ref="loading"></tkm-loading>
   </div>
 </template>
 <script>
 import login from 'service/login'
 import EventBus from 'utilities/event-bus'
+import TkmLoading from 'components/tkm-loading'
 export default {
+  components: {
+    TkmLoading
+  },
   data () {
     return {
       form: {
@@ -41,6 +46,7 @@ export default {
   },
   methods: {
     onSubmit () {
+      this.$refs.loading.show()
       if (this.isRememberMe.length > 0) {
         this.form.rememberMe = true
       } else {
@@ -54,7 +60,9 @@ export default {
 //        })
         EventBus.backUrl = ''
         this.$router.replace(backUrl)
+        this.$refs.loading.hide()
       }, (err) => {
+        this.$refs.loading.hide()
         console.log(err)
 //        this.$message.error(err)
       })

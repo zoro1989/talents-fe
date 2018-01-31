@@ -11,6 +11,7 @@ export default {
     formData.append('pageNo', params.pageNo)
     function makeData (originalData) {
       return {
+        message: originalData.message,
         totalCount: originalData.data.total,
         rows: originalData.data.list.map((row) => {
           return {

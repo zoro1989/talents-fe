@@ -236,6 +236,7 @@ export default{
     initData (params, success, fail) {
       talentsSearchList.getList.bind(this)({info: this.$route.params, pageNo: params.pageNo}, (data) => {
         this.tableData = data
+        success(data.message)
       }, (err) => {
         fail(err)
       })

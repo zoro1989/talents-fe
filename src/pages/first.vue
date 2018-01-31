@@ -2,27 +2,32 @@
   <div class="first">
     <div class="header">
       <div class="nav-bar">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="javascript:void(0)">
           <strong>MIN</strong>IMAL
         </a>
         <div class="sidebar-collapse">
-          <a href="#">
+          <a href="javascript:void(0)">
             <i class="fa fa-bars"></i>
           </a>
         </div>
       </div>
-      <div class="nav-title"></div>
+      <div class="nav-title">
+        <ul>
+          <li class="btn-cta"><a href="javascript:void(0)"><span>欢迎{{nickname}}</span></a></li>
+          <li class="btn-cta"><a href="javascript:void(0)" @click="logout"><span>退出<i class="fa fa-sign-out"></i></span></a></li>
+        </ul>
+      </div>
     </div>
     <div class="container">
       <div class="menu">
-        <a href="#" class="sidebar-toggle">Navigation </a>
+        <a href="javascript:void(0)" class="sidebar-toggle">Navigation </a>
         <ul class="nav">
           <li class="nav-item">
-            <a href="#" class="nav-link" :class="{'active': selectIndex === 0}" @click="changeTab(0)">
+            <a href="javascript:void(0)" class="nav-link" :class="{'active': selectIndex === 0}" @click="changeTab(0)">
               <i class="fa fa-tint"></i> <span class="nav-text">个人中心</span><b class="fa fa-plus dropdown-plus"></b>
             </a>
             <transition name="slide">
-              <ul class="dropdown-menu h5" v-show="selectIndex === 0">
+              <ul class="dropdown-menu h5" v-show="subSelectIndex === 0">
                 <li class="dropdown-item">
                   <router-link class="dropdown-link" to="/personal-data">
                     <i class="fa fa-caret-right"></i> 个人资料
@@ -52,11 +57,11 @@
             </transition>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link" :class="{'active': selectIndex === 1}" @click="changeTab(1)" >
+            <a href="javascript:void(0)" class="nav-link" :class="{'active': selectIndex === 1}" @click="changeTab(1)" >
               <i class="fa fa-tachometer"></i> <span class="nav-text">权限管理</span><b class="fa fa-plus dropdown-plus"></b>
             </a>
             <transition name="slide">
-              <ul class="dropdown-menu h4" v-show="selectIndex === 1">
+              <ul class="dropdown-menu h4" v-show="subSelectIndex === 1">
                 <li class="dropdown-item">
                   <router-link class="dropdown-link" to="role-list">
                     <i class="fa fa-caret-right"></i> 角色列表
@@ -81,11 +86,11 @@
             </transition>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link" :class="{'active': selectIndex === 2}"  @click="changeTab(2)">
+            <a href="javascript:void(0)" class="nav-link" :class="{'active': selectIndex === 2}"  @click="changeTab(2)">
               <i class="fa fa-pencil"></i> <span class="nav-text">字典设置</span><b class="fa fa-plus dropdown-plus"></b>
             </a>
             <transition name="slide">
-              <ul class="dropdown-menu h1" v-show="selectIndex === 2">
+              <ul class="dropdown-menu h1" v-show="subSelectIndex === 2">
                 <li class="dropdown-item">
                   <router-link class="dropdown-link" to="dic-list">
                     <i class="fa fa-caret-right"></i> 字典设置
@@ -95,11 +100,11 @@
             </transition>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link" :class="{'active': selectIndex === 3}"  @click="changeTab(3)">
+            <a href="javascript:void(0)" class="nav-link" :class="{'active': selectIndex === 3}"  @click="changeTab(3)">
               <i class="fa fa-bar-chart-o"></i> <span class="nav-text">项目</span><b class="fa fa-plus dropdown-plus"></b>
             </a>
             <transition name="slide">
-              <ul class="dropdown-menu h2" v-show="selectIndex === 3">
+              <ul class="dropdown-menu h2" v-show="subSelectIndex === 3">
                 <li class="dropdown-item">
                   <router-link class="dropdown-link" to="project-analyze">
                     <i class="fa fa-caret-right"></i> 项目分析
@@ -114,11 +119,11 @@
             </transition>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link" :class="{'active': selectIndex === 4}"  @click="changeTab(4)">
+            <a href="javascript:void(0)" class="nav-link" :class="{'active': selectIndex === 4}"  @click="changeTab(4)">
               <i class="fa fa-desktop"></i> <span class="nav-text">人才</span><b class="fa fa-plus dropdown-plus"></b>
             </a>
             <transition name="slide">
-              <ul class="dropdown-menu h1" v-show="selectIndex === 4">
+              <ul class="dropdown-menu h1" v-show="subSelectIndex === 4">
                 <li class="dropdown-item">
                   <router-link class="dropdown-link" to="talents-search">
                     <i class="fa fa-caret-right"></i> 人才检索
@@ -157,12 +162,22 @@ export default {
       isShowMenu: true,
       drawerOpen: false,
       docked: false,
-      selectIndex: 0
+      selectIndex: 0,
+      subSelectIndex: 0
     }
   },
   methods: {
     changeTab(index) {
+      if (this.subSelectIndex === -1) {
+        this.subSelectIndex = this.selectIndex
+        return
+      }
+      if (this.selectIndex === index) {
+        this.subSelectIndex = -1
+        return
+      }
       this.selectIndex = index
+      this.subSelectIndex = index
     },
     logout () {
       first.logout.bind(this)({}, (data) => {
@@ -213,6 +228,20 @@ export default {
             display: inline-block
       .nav-title
         flex: 1
+        display: flex
+        justify-content: flex-end
+        align-items: center
+        margin-right: 10px
+        .btn-cta
+          float: left
+          font-size: $font-size-medium
+          a
+            padding: 30px 0px
+            color: #fff
+            span
+              background: rgba(255, 255, 255, 0.2)
+              padding: 4px 10px
+              border-radius: 100px
     .container
       display: flex
       .menu

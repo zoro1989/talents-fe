@@ -18,7 +18,7 @@ export default {
     )
   },
   postJSON (url, params, success, fail, makeData) {
-    this.$refs.loading.show()
+    // this.$refs.loading.show()
     axios.post(url, JSON.stringify(params), {
       headers: {
         'Content-Type': 'application/json;charset=UTF-8'

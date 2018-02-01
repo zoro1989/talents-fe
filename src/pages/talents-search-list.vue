@@ -27,7 +27,7 @@
               <mu-date-picker class="item" label="入社日期"  mode="landscape" v-model="info.joinDay" hintText="请输入"/>
             </div>
             <div class="search-item">
-              <mu-date-picker class="item" label="实习开始" mode="landscape" v-model="info.practiceStartDate" hintText="请输入"/>
+              <mu-date-picker class="item" label="实习开始日" mode="landscape" v-model="info.practiceStartDate" hintText="请输入"/>
               <mu-date-picker class="item" label="实习结束日" mode="landscape" v-model="info.practiceEndDate" hintText="请输入"/>
               <mu-date-picker class="item" label="试用开始日" mode="landscape" v-model="info.trialStartDate" hintText="请输入"/>
               <mu-date-picker class="item" label="试用结束日" mode="landscape" v-model="info.trialEndDate" hintText="请输入"/>
@@ -164,20 +164,20 @@
       <mu-list-item class="info" title="项目经验" :open="open3" @click="toggleShow3" :toggleNested="toggleNested">
         <div slot="nested">
           <mu-float-button icon="add" @click="addProjectExpItem"/>
-          <div class="search-item" v-if="info.busProjectExpList && info.busProjectExpList.length > 0" v-for="(item, index) in info.busProjectExpList" v-bind:key="index">
-            <mu-date-picker class="item" label="开始时间"  mode="landscape" v-model="item.startDate" hintText="请输入"/>
-            <mu-date-picker class="item" label="结束时间"  mode="landscape" v-model="item.endDate" hintText="请输入"/>
-            <mu-select-field class="item" v-model="item.projectId" label="参与项目" hintText="请选择" :notEmpty="notRequired">
+          <div class="search-item" v-if="info.busProjectExpList && info.busProjectExpList.length > 0" v-for="(projExp, index) in info.busProjectExpList" v-bind:key="index">
+            <mu-date-picker class="item" label="开始时间"  mode="landscape" v-model="projExp.startDate" hintText="请输入"/>
+            <mu-date-picker class="item" label="结束时间"  mode="landscape" v-model="projExp.endDate" hintText="请输入"/>
+            <mu-select-field class="item" v-model="projExp.projectId" label="参与项目" hintText="请选择" :notEmpty="notRequired">
               <mu-menu-item v-for="item in info.busProjectList" :key="item.id + ''" :value="item.id + ''" :title="item.projName"/>
             </mu-select-field>
             <mu-float-button icon="delete" @click="deleteProjectExpItem(index)"/>
           </div>
         </div>
       </mu-list-item>
-      <mu-list-item class="info" title="项目轨迹" :open="open4" @click="toggleShow4" :toggleNested="toggleNested">
+      <mu-list-item class="info" v-if="info.busProjectList && info.busProjectList.length > 0 && info.busProjectExpList && info.busProjectExpList.length > 0" title="项目轨迹" :open="open4" @click="toggleShow4" :toggleNested="toggleNested">
         <div slot="nested">
           <mu-timeline>
-            <mu-timeline-item v-if="info.busProjectList && info.busProjectList.length > 0 && info.busProjectExpList && info.busProjectExpList.length > 0" v-for="(item, index) in info.busProjectExpList" v-bind:key="index">
+            <mu-timeline-item v-for="(item, index) in info.busProjectExpList" v-bind:key="index">
               <span slot="time">{{item.startDate}}至{{item.endDate}}</span>
               <span slot="des">{{getDesName(item.projectId)}}</span>
             </mu-timeline-item>
@@ -298,7 +298,11 @@ export default{
       const index = this.info.busProjectList.findIndex((item) => {
         return projectId === item.id + ''
       })
-      return this.info.busProjectList[index].projName
+      if (index > -1) {
+        return this.info.busProjectList[index] && this.info.busProjectList[index].projName ? this.info.busProjectList[index].projName : ''
+      } else {
+        return ''
+      }
     }
   }
 }

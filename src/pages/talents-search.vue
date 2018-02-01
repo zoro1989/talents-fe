@@ -19,7 +19,7 @@
     <mu-list-item class="advance-search" slot="nested" title="高级检索" :open="open" @click="toggleShow" :toggleNested="toggleNested">
       <div slot="nested">
         <div class="search-item">
-          <mu-date-picker class="item" label="实习开始日(起)" mode="landscape" v-model="info.practiceStartDateStart" hintText="请输入实"/>
+          <mu-date-picker class="item" label="实习开始日(起)" mode="landscape" v-model="info.practiceStartDateStart" hintText="请输入"/>
           <mu-date-picker class="item" label="实习开始日(止)" mode="landscape" v-model="info.practiceStartDateEnd" hintText="请输入"/>
           <mu-date-picker class="item" label="实习结束日(起)" mode="landscape" v-model="info.practiceEndDateStart" hintText="请输入"/>
           <mu-date-picker class="item" label="实习结束日(止)" mode="landscape" v-model="info.practiceEndDateEnd" hintText="请输入"/>
@@ -89,7 +89,7 @@
           <mu-select-field class="item" :multiple="multiple" v-model="info.ispartied" label="是否党员" hintText="请选择" :notEmpty="notRequired">
             <mu-menu-item v-for="item in info.yesNoList" :key="item.id + ''" :value="item.dicValue + ''" :title="item.dicLabel"/>
           </mu-select-field>
-          <mu-select-field class="item" :multiple="multiple" v-model="info.department" label="部门" hintText="请选择" :notEmpty="notRequired">
+          <mu-select-field class="item" :multiple="multiple" v-model="info.departmentIdList" label="部门" hintText="请选择" :notEmpty="notRequired">
             <mu-menu-item v-for="item in info.departmentList" :key="item.id + ''" :value="item.dicValue + ''" :title="item.dicLabel"/>
           </mu-select-field>
         </div>

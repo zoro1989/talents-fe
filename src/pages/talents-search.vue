@@ -109,18 +109,19 @@
     <div class="button-group">
       <mu-raised-button label="搜索"  @click="onSearch" primary/>
     </div>
-    <tkm-loading></tkm-loading>
+    <tkm-loading ref="loading"></tkm-loading>
+    <tkm-message ref="message" :message="message"></tkm-message>
   </div>
 </template>
 
 <script>
 import talentsSearch from 'service/talents-search'
 import TkmSelect from 'components/tkm-select'
-import TkmLoading from 'components/tkm-loading'
+import {talentsMixin, messageMinxin} from 'common/js/mixin'
 export default{
+  mixins: [talentsMixin, messageMinxin],
   components: {
-    TkmSelect,
-    TkmLoading
+    TkmSelect
   },
   created () {
     talentsSearch.get.bind(this)({}, (data) => {

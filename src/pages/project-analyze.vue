@@ -27,12 +27,16 @@
         <div class="show" ref="show3"></div>
       </div>
     </div>
+    <tkm-loading ref="loading"></tkm-loading>
+    <tkm-message ref="message" :message="message"></tkm-message>
   </div>
 </template>
 <script>
   import projectAnalyze from 'service/project-analyze'
+  import {talentsMixin, messageMinxin} from 'common/js/mixin'
   const echarts = require('echarts')
   export default {
+    mixins: [talentsMixin, messageMinxin],
     data() {
       return {
         chartBgData: {}

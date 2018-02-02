@@ -167,7 +167,7 @@
           <div class="search-item" v-if="info.busProjectExpList && info.busProjectExpList.length > 0" v-for="(projExp, index) in info.busProjectExpList" v-bind:key="index">
             <mu-date-picker class="item" label="开始时间"  mode="landscape" v-model="projExp.startDate" hintText="请输入"/>
             <mu-date-picker class="item" label="结束时间"  mode="landscape" v-model="projExp.endDate" hintText="请输入"/>
-            <project-select-dialog :content.sync="projExp.projectId"></project-select-dialog>
+            <project-select-dialog :content.sync="projExp.projectId" :name="projExp.projName"></project-select-dialog>
             <mu-float-button icon="delete" @click="deleteProjectExpItem(index)"/>
           </div>
         </div>
@@ -183,6 +183,7 @@
         </div>
       </mu-list-item>
     </tkm-dialog>
+    <tkm-loading ref="loading"></tkm-loading>
   </div>
 </template>
 
@@ -191,7 +192,9 @@ import talentsSearchList from 'service/talents-search-list'
 import TkmDialog from 'components/tkm-dialog'
 import TkmTable from 'components/tkm-table'
 import ProjectSelectDialog from './project-select-dialog'
+import {talentsMixin} from 'common/js/mixin'
 export default{
+  mixins: [talentsMixin],
   components: {
     TkmDialog,
     TkmTable,
@@ -252,6 +255,7 @@ export default{
           fail(err)
         })
       } else if (action === 'editStaff') {
+        this.$refs.loading.show()
         talentsSearchList.getStaffInfo.bind(this)({id: row.id}, (data) => {
           this.info = Object.assign({}, this.info, data)
           this.$refs.dialogForm.openDialog(() => {

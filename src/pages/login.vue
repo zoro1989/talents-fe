@@ -23,13 +23,16 @@
       <mu-raised-button label="注册" @click="onRegister" class="register-btn" />
     </div>
     <tkm-loading ref="loading"></tkm-loading>
+    <tkm-message ref="message" :message="message"></tkm-message>
   </div>
 </template>
 <script>
 import login from 'service/login'
 import EventBus from 'utilities/event-bus'
 import TkmLoading from 'components/tkm-loading'
+import {messageMinxin} from 'common/js/mixin'
 export default {
+  mixins: [messageMinxin],
   components: {
     TkmLoading
   },
@@ -60,9 +63,7 @@ export default {
 //        })
         EventBus.backUrl = ''
         this.$router.replace(backUrl)
-        this.$refs.loading.hide()
       }, (err) => {
-        this.$refs.loading.hide()
         console.log(err)
 //        this.$message.error(err)
       })

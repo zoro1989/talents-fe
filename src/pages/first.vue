@@ -138,12 +138,15 @@
         <router-view></router-view>
       </div>
     </div>
+    <tkm-message ref="message" :message="message"></tkm-message>
   </div>
 </template>
 <script>
 import first from 'service/first'
+import {messageMinxin} from 'common/js/mixin'
 import EventBus from 'utilities/event-bus'
 export default {
+  mixins: [messageMinxin],
   created () {
     first.get.bind(this)({}, (data) => {
       this.nickname = data.nickname

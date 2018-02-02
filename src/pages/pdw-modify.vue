@@ -6,12 +6,15 @@
     <section class="button-group">
       <mu-raised-button label="确认修改"  @click="onSubmit" primary/>
     </section>
+    <tkm-message ref="message" :message="message"></tkm-message>
   </section>
 </template>
 
 <script>
 import pwdModify from 'service/pwd-modify'
+import {messageMinxin} from 'common/js/mixin'
 export default{
+  mixins: [messageMinxin],
   data () {
     return {
       form: {

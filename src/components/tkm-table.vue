@@ -40,13 +40,13 @@
 </template>
 
 <script>
+  import {messageMinxin} from 'common/js/mixin'
   import TkmLoading from 'components/tkm-loading'
-  import TkmMessage from 'components/tkm-message'
   import isNotEmpty from 'utilities/is-not-empty'
   export default{
+    mixins: [messageMinxin],
     components: {
-      TkmLoading,
-      TkmMessage
+      TkmLoading
     },
     created () {
       if (this.searchOperations.length > 0) {
@@ -61,9 +61,7 @@
           return opt
         })
       }
-      this.$nextTick(() => {
-        this.loadTable()
-      })
+      this.loadTable()
     },
   props: {
       headers: {},
@@ -96,7 +94,6 @@
         form: {
           findContent: ''
         },
-        message: '',
         dialogProjName: ''
       }
     },
@@ -132,7 +129,9 @@
         this.$emit('route-change', { pageNo: this.pageNo, findContent: this.form.findContent }, to, success, fail)
       },
       loadTable () {
-        this.$refs.loading.show()
+        this.$nextTick(() => {
+          this.$refs.loading.show()
+        })
         let success = (msg) => {
           this.showSuccess(msg)
         }
@@ -174,9 +173,6 @@
   //          message: msg,
   //          type: 'success'
   //        })
-          this.$nextTick(() => {
-            this.message = msg
-          })
         }
         this.$nextTick(() => {
           this.$refs.loading.hide()
@@ -184,12 +180,8 @@
       },
       showError (msg) {
         if (msg) {
-          this.$nextTick(() => {
-            this.message = msg
-            this.$refs.message.show()
-          })
+          this.showMsgBox(msg)
         }
-        //        this.$message.error(msg)
         this.$nextTick(() => {
           this.$refs.loading.hide()
         })

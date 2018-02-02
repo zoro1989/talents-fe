@@ -13,11 +13,19 @@
       <mu-raised-button label="注册"  @click="onRegister" secondary/>
       <mu-raised-button label="登录"  @click="onSubmit" primary/>
     </section>
+    <tkm-loading ref="loading"></tkm-loading>
+    <tkm-message ref="message" :message="message"></tkm-message>
   </section>
 </template>
 <script>
 import register from 'service/register'
+import TkmLoading from 'components/tkm-loading'
+import {messageMinxin} from 'common/js/mixin'
 export default {
+  mixins: [messageMinxin],
+  components: {
+    TkmLoading
+  },
   data () {
     return {
       form: {
@@ -34,6 +42,7 @@ export default {
       this.$router.replace('login')
     },
     onRegister () {
+      this.$refs.loading.show()
       register.submitRegister.bind(this)({form: this.form}, (data) => {
 //        this.$message({
 //          message: data.message,

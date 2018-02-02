@@ -7,32 +7,22 @@
       <mu-raised-button label="确认修改"  @click="onSubmit" primary/>
     </section>
     <tkm-loading ref="loading"></tkm-loading>
+    <tkm-message ref="message" :message="message"></tkm-message>
   </section>
 </template>
 
 <script>
 import infoModify from 'service/info-modify'
-import TkmLoading from 'components/tkm-loading'
+import {talentsMixin, messageMinxin} from 'common/js/mixin'
 export default{
-  components: {
-    TkmLoading
-  },
+  mixins: [talentsMixin, messageMinxin],
   created () {
-    this.$nextTick(() => {
-      this.$refs.loading.show()
-    })
     infoModify.get.bind(this)({}, (data) => {
       this.form.id = data.id
       this.form.nickname = data.nickname
       this.form.email = data.email
-      this.$nextTick(() => {
-        this.$refs.loading.hide()
-      })
     }, (err) => {
       console.log(err)
-      this.$nextTick(() => {
-        this.$refs.loading.hide()
-      })
 //      this.$message.error(err)
     })
   },

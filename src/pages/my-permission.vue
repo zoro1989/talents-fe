@@ -5,12 +5,16 @@
             <mu-list-item v-for="permission in role.permissions" :key="permission.id" slot="nested" :title="permission.name"/>
         </mu-list-item>
     </mu-list>
+    <tkm-loading ref="loading"></tkm-loading>
+    <tkm-message ref="message" :message="message"></tkm-message>
   </section>
 </template>
 
 <script>
 import myPermission from 'service/my-permission'
+import {talentsMixin, messageMinxin} from 'common/js/mixin'
 export default{
+  mixins: [talentsMixin, messageMinxin],
   created () {
     myPermission.get.bind(this)({}, (data) => {
       this.roles = data

@@ -8,24 +8,24 @@
               :multiSelectable="multiSelectable" :height="height" @rowClick="rowClick">
       <mu-thead slot="header">
         <mu-tr>
-          <mu-th><mu-checkbox v-model="selectedAll" /></mu-th>
+          <mu-th><mu-checkbox v-if="!isdialog" v-model="selectedAll" /></mu-th>
           <mu-th v-for="(head, index) in headers" :key="index" :tooltip="head.name">{{head.name}}</mu-th>
-          <mu-th tooltip="操作">操作</mu-th>
+          <mu-th v-if="!isdialog" tooltip="操作">操作</mu-th>
         </mu-tr>
       </mu-thead>
       <mu-tbody>
         <mu-tr v-for="(row, index) in tableData.rows"  :key="index" :selected="row.selected" :class="{'row-section':row.sections}">
-          <template v-if="row.sections">
-            <mu-td></mu-td>
+          <template v-if="row.sections && row.sections.length > 0">
+            <mu-td><mu-checkbox v-if="!isdialog" v-model="row.selected" /><mu-radio v-if="isdialog" :nativeValue="row.id + ''" v-model="dialogProjName" /></mu-td>
             <mu-td v-for="(section, index) in row.sections" :key="index">{{section.value}}</mu-td>
-            <mu-td>
+            <mu-td v-if="!isdialog" >
               <mu-raised-button v-for="(operation, index) in row.operations" :key="index" :label="operation.name"  @click="optHandler(operation.action, row)" :backgroundColor="operation.type==='normal' ? '#337ab7' : operation.type==='delete'?'#a2d200':'#1ccdaa'"/>
             </mu-td>
           </template>
           <template v-if="!row.sections">
-            <mu-td><mu-checkbox v-model="row.selected" /></mu-td>
+            <mu-td><mu-checkbox v-if="!isdialog" v-model="row.selected" /><mu-radio v-if="isdialog" :nativeValue="row.id + ''" v-model="dialogProjName" /></mu-td>
             <mu-td v-for="(column, index) in row.columns" :key="index">{{column.value}}</mu-td>
-            <mu-td>
+            <mu-td v-if="!isdialog" >
               <mu-raised-button v-for="(operation, index) in row.operations" :key="index" :label="operation.name"  @click="optHandler(operation.action, row)" :backgroundColor="operation.type==='normal' ? '#337ab7' : operation.type==='delete'?'#a2d200':'#1ccdaa'"/>
             </mu-td>
           </template>
@@ -77,6 +77,10 @@
       hasSearchBox: {
         type: Boolean,
         default: true
+      },
+      isdialog: {
+        type: Boolean,
+        default: false
       }
     },
     data () {
@@ -84,7 +88,7 @@
         fixedHeader: true,
         selectable: true,
         showCheckbox: false,
-        multiSelectable: true,
+        multiSelectable: false,
         selectedAll: false,
         totalCount: 1,
         pageNo: 1,
@@ -92,7 +96,8 @@
         form: {
           findContent: ''
         },
-        message: ''
+        message: '',
+        dialogProjName: ''
       }
     },
     watch: {
@@ -188,6 +193,9 @@
         this.$nextTick(() => {
           this.$refs.loading.hide()
         })
+      },
+      getDialogProjName() {
+        return this.dialogProjName ? this.dialogProjName * 1 : -1
       }
     }
   }
@@ -195,6 +203,7 @@
 </script>
 
 <style scoped lang="stylus">
+  @import "~common/stylus/variable.styl"
   .tkm-table
     min-width: 774px
     font-size: 13px
@@ -203,7 +212,7 @@
       min-width: 0!important
     .mu-tr
       &.row-section
-        background-color: rgba(255,152,0,0.1)
+        background-color: rgba(255,255,255,0.1)
       .mu-th,.mu-td
         height: 48px
         line-height: 48px

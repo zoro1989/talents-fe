@@ -4,59 +4,111 @@
 import httpHandler from 'http/http-handler'
 import dateTime from 'utilities/timestamp-to-date-time'
 import uris from 'router/uris'
+function _normalizeProjects(list) {
+  let ret = []
+  list.map((row) => {
+    ret.push({
+      id: row.id,
+      selected: false,
+      sections: [
+        {
+          name: 'projName',
+          value: row.projName || '--'
+        },
+        {
+          name: 'startDate',
+          value: dateTime(row.startDate).split(' ')[0] || '--'
+        },
+        {
+          name: 'endDate',
+          value: dateTime(row.endDate).split(' ')[0] || '--'
+        },
+        {
+          name: 'serviceCustomer',
+          value: row.serviceCustomer || '--'
+        },
+        {
+          name: 'contractCount',
+          value: row.contractCount || '--'
+        },
+        {
+          name: 'pubCount',
+          value: row.pubCount || '--'
+        }
+      ],
+      operations: [
+        {
+          name: '编辑',
+          action: 'editProject',
+          type: 'normal'
+        },
+        {
+          name: '删除',
+          action: 'deleteProject',
+          type: 'delete'
+        }
+      ]
+    })
+    row.projectItems.map((item) => {
+      ret.push(
+        {
+          id: item.id,
+          selected: false,
+          columns: [
+            {
+              name: 'projName',
+              value: item.projName || '--'
+            },
+            {
+              name: 'startDate',
+              value: dateTime(item.startDate).split(' ')[0] || '--'
+            },
+            {
+              name: 'endDate',
+              value: dateTime(item.endDate).split(' ')[0] || '--'
+            },
+            {
+              name: 'serviceCustomer',
+              value: item.serviceCustomer || '--'
+            },
+            {
+              name: 'contractCount',
+              value: item.contractCount || '--'
+            },
+            {
+              name: 'pubCount',
+              value: item.pubCount || '--'
+            }
+          ],
+          operations: [
+            {
+              name: '编辑',
+              action: 'editProject',
+              type: 'normal'
+            },
+            {
+              name: '删除',
+              action: 'deleteProject',
+              type: 'delete'
+            }
+          ]
+        }
+      )
+    })
+  })
+  return ret
+}
 export default {
   getList (params, success, fail) {
     let formData = new FormData()
     formData.append('findContent', params.findContent)
     formData.append('pageNo', params.pageNo)
     function makeData (originalData) {
+      let rows = _normalizeProjects(originalData.data.list)
       return {
         message: originalData.message,
         totalCount: originalData.data.total,
-        rows: originalData.data.list.map((row) => {
-          return {
-            id: row.id,
-            selected: false,
-            columns: [
-              {
-                name: 'projName',
-                value: row.projName || '--'
-              },
-              {
-                name: 'startDate',
-                value: dateTime(row.startDate).split(' ')[0] || '--'
-              },
-              {
-                name: 'endDate',
-                value: dateTime(row.endDate).split(' ')[0] || '--'
-              },
-              {
-                name: 'serviceCustomer',
-                value: row.serviceCustomer || '--'
-              },
-              {
-                name: 'contractCount',
-                value: row.contractCount || '--'
-              },
-              {
-                name: 'pubCount',
-                value: row.pubCount || '--'
-              }
-            ],
-            operations: [
-              {
-                name: '编辑',
-                action: 'editProject',
-                type: 'normal'
-              },
-              {
-                name: '删除',
-                action: 'deleteProject',
-                type: 'delete'
-              }
-            ]
-          }
-        })
+        rows: rows
       }
     }
     httpHandler.post.bind(this)(uris.project.index, formData, success, fail, makeData)

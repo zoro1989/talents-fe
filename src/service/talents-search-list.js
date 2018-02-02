@@ -148,7 +148,7 @@ export default {
             if (isNotEmpty(item['endDate'])) {
               item['endDate'] = dateTime(item['endDate']).split(' ')[0]
             }
-            item['projectId'] = item['projectId'] + ''
+            // item['projectId'] = item['projectId']
             return item
           })
         }
@@ -186,7 +186,7 @@ export default {
           if (isNotEmpty(item['endDate'])) {
             item['endDate'] = dateTime(item['endDate']).split(' ')[0]
           }
-          item['projectId'] = item['projectId'] + ''
+          // item['projectId'] = item['projectId'] + ''
           return item
         })
       } else {

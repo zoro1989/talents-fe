@@ -167,9 +167,7 @@
           <div class="search-item" v-if="info.busProjectExpList && info.busProjectExpList.length > 0" v-for="(projExp, index) in info.busProjectExpList" v-bind:key="index">
             <mu-date-picker class="item" label="开始时间"  mode="landscape" v-model="projExp.startDate" hintText="请输入"/>
             <mu-date-picker class="item" label="结束时间"  mode="landscape" v-model="projExp.endDate" hintText="请输入"/>
-            <mu-select-field class="item" v-model="projExp.projectId" label="参与项目" hintText="请选择" :notEmpty="notRequired">
-              <mu-menu-item v-for="item in info.busProjectList" :key="item.id + ''" :value="item.id + ''" :title="item.projName"/>
-            </mu-select-field>
+            <project-select-dialog :content.sync="projExp.projectId"></project-select-dialog>
             <mu-float-button icon="delete" @click="deleteProjectExpItem(index)"/>
           </div>
         </div>
@@ -192,10 +190,12 @@
 import talentsSearchList from 'service/talents-search-list'
 import TkmDialog from 'components/tkm-dialog'
 import TkmTable from 'components/tkm-table'
+import ProjectSelectDialog from './project-select-dialog'
 export default{
   components: {
     TkmDialog,
-    TkmTable
+    TkmTable,
+    ProjectSelectDialog
   },
   data () {
     return {
@@ -287,7 +287,7 @@ export default{
       let proj = {
         startDate: '',
         endDate: '',
-        projectId: ''
+        projectId: -1
       }
       this.info.busProjectExpList.push(proj)
     },
@@ -296,7 +296,7 @@ export default{
     },
     getDesName(projectId) {
       const index = this.info.busProjectList.findIndex((item) => {
-        return projectId === item.id + ''
+        return projectId === item.id
       })
       if (index > -1) {
         return this.info.busProjectList[index] && this.info.busProjectList[index].projName ? this.info.busProjectList[index].projName : ''

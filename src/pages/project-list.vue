@@ -24,29 +24,29 @@
         </div>
         <div class="project">
           <mu-text-field class="item" label="子项目名" v-model="proj.projName" hintText="请输入" ></mu-text-field>
-          <mu-select-field class="item" :multiple="multiple" v-model="proj.devLanguage" label="开发语言" hintText="请选择">
-            <mu-menu-item v-for="item in info.devLanguageList" :key="item.id + ''" :value="item.dicValue + ''" :title="item.dicLabel"/>
+          <mu-select-field class="item" v-model="proj.devLanguage" label="开发语言" hintText="请选择">
+            <mu-menu-item v-for="item in info.devLanguageList" :key="item.id" :value="item.dicValue" :title="item.dicLabel"/>
           </mu-select-field>
-          <mu-select-field class="item" :multiple="multiple" v-model="proj.operateSys" label="操作系统" hintText="请选择">
-            <mu-menu-item v-for="item in info.operateSysList" :key="item.id + ''" :value="item.dicValue + ''" :title="item.dicLabel"/>
+          <mu-select-field class="item" v-model="proj.operateSys" label="操作系统" hintText="请选择">
+            <mu-menu-item v-for="item in info.operateSysList" :key="item.id" :value="item.dicValue" :title="item.dicLabel"/>
           </mu-select-field>
-          <mu-select-field class="item" :multiple="multiple" v-model="proj.devTool" label="开发工具" hintText="请选择">
-            <mu-menu-item v-for="item in info.devToolList" :key="item.id + ''" :value="item.dicValue + ''" :title="item.dicLabel"/>
+          <mu-select-field class="item" v-model="proj.devTool" label="开发工具" hintText="请选择">
+            <mu-menu-item v-for="item in info.devToolList" :key="item.id" :value="item.dicValue" :title="item.dicLabel"/>
           </mu-select-field>
-          <mu-select-field class="item" :multiple="multiple" v-model="proj.devDatabase" label="数据库" hintText="请选择">
-            <mu-menu-item v-for="item in info.devDatabaseList" :key="item.id + ''" :value="item.dicValue + ''" :title="item.dicLabel"/>
+          <mu-select-field class="item" v-model="proj.devDatabase" label="数据库" hintText="请选择">
+            <mu-menu-item v-for="item in info.devDatabaseList" :key="item.id" :value="item.dicValue" :title="item.dicLabel"/>
           </mu-select-field>
-          <mu-select-field class="item" :multiple="multiple" v-model="proj.devAppServer" label="WEB服务器" hintText="请选择">
-            <mu-menu-item v-for="item in info.devAppServerList" :key="item.id + ''" :value="item.dicValue + ''" :title="item.dicLabel"/>
+          <mu-select-field class="item" v-model="proj.devAppServer" label="WEB服务器" hintText="请选择">
+            <mu-menu-item v-for="item in info.devAppServerList" :key="item.id" :value="item.dicValue" :title="item.dicLabel"/>
           </mu-select-field>
-          <mu-select-field class="item" :multiple="multiple" v-model="proj.devFramework" label="技术框架" hintText="请选择">
-            <mu-menu-item v-for="item in info.devFrameworkList" :key="item.id + ''" :value="item.dicValue + ''" :title="item.dicLabel"/>
+          <mu-select-field class="item" v-model="proj.devFramework" label="技术框架" hintText="请选择">
+            <mu-menu-item v-for="item in info.devFrameworkList" :key="item.id" :value="item.dicValue" :title="item.dicLabel"/>
           </mu-select-field>
-          <mu-select-field class="item" :multiple="multiple" v-model="proj.serviceCustomer" label="服务客户" hintText="请选择">
-            <mu-menu-item v-for="item in info.serviceCustomerList" :key="item.id + ''" :value="item.dicValue + ''" :title="item.dicLabel"/>
+          <mu-select-field class="item" v-model="proj.serviceCustomer" label="服务客户" hintText="请选择">
+            <mu-menu-item v-for="item in info.serviceCustomerList" :key="item.id" :value="item.dicValue" :title="item.dicLabel"/>
           </mu-select-field>
-          <mu-select-field class="item" :multiple="multiple" v-model="proj.busType" label="业务类别" hintText="请选择">
-            <mu-menu-item v-for="item in info.busTypeList" :key="item.id + ''" :value="item.dicValue + ''" :title="item.dicLabel"/>
+          <mu-select-field class="item" v-model="proj.busType" label="业务类别" hintText="请选择">
+            <mu-menu-item v-for="item in info.busTypeList" :key="item.id" :value="item.dicValue" :title="item.dicLabel"/>
           </mu-select-field>
           <mu-text-field class="item" label="契约数" v-model="proj.contractCount" hintText="请输入" ></mu-text-field>
           <mu-text-field class="item" label="投入数" v-model="proj.putCount" hintText="请输入" ></mu-text-field>
@@ -73,7 +73,6 @@ export default{
       dialog: false,
       dialogMsg: '',
       info: {},
-      multiple: true,
       tableData: [],
       searchOperations: [
         {
@@ -116,25 +115,22 @@ export default{
         })
       } else if (action === 'editProject') {
         projectList.editProject.bind(this)({row: row}, (data) => {
-          this.info = Object.assign({}, this.info, {
-            projName: data.projName,
-            startDate: data.startDate,
-            endDate: data.endDate,
-            devLanguageList: data.devLanguageList,
-            operateSysList: data.operateSysList,
-            devToolList: data.devToolList,
-            devDatabaseList: data.devDatabaseList,
-            devAppServerList: data.devAppServerList,
-            devFrameworkList: data.devFrameworkList,
-            serviceCustomerList: data.serviceCustomerList,
-            busTypeList: data.busTypeList,
-            projectItems: data.projectItems
+          data.projectItems.map((item) => {
+            item.devLanguage = item.devLanguage + ''
+            item.operateSys = item.operateSys + ''
+            item.devTool = item.devTool + ''
+            item.devDatabase = item.devDatabase + ''
+            item.devAppServer = item.devAppServer + ''
+            item.devFramework = item.devFramework + ''
+            item.serviceCustomer = item.serviceCustomer + ''
+            item.busType = item.busType + ''
+            return item
           })
+          this.info = Object.assign({}, this.info, data)
           this.$refs.dialogForm.openDialog(() => {
-            row.projName = this.info.projName
-            row.startDate = this.info.startDate
-            row.endDate = this.info.endDate
-            row.projectItems = this.info.projectItems
+            for (let key in this.info) {
+              row[key] = this.info[key]
+            }
             projectList.save.bind(this)({row: row}, (data) => {
               this.$refs.dialog.hide()
               success(data.message)

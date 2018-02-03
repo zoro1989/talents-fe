@@ -38,14 +38,14 @@ function _normalizeProjects(list) {
       ],
       operations: [
         {
-          name: '编辑',
-          action: 'editProject',
-          type: 'normal'
-        },
-        {
           name: '删除',
           action: 'deleteProject',
           type: 'delete'
+        },
+        {
+          name: '编辑',
+          action: 'editProject',
+          type: 'normal'
         }
       ]
     })
@@ -81,11 +81,6 @@ function _normalizeProjects(list) {
             }
           ],
           operations: [
-            {
-              name: '编辑',
-              action: 'editProject',
-              type: 'normal'
-            },
             {
               name: '删除',
               action: 'deleteProject',

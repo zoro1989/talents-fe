@@ -55,6 +55,16 @@ export default {
     info.dutyIdList && info.dutyIdList.length > 0 && formData.append('dutyIdList', info.dutyIdList)
     info.tLevelIdList && info.tLevelIdList.length > 0 && formData.append('tLevelIdList', info.tLevelIdList)
     info.studentLineIdList && info.studentLineIdList.length > 0 && formData.append('studentLineIdList', info.studentLineIdList)
+    info.devLanguageIdList && info.devLanguageIdList.length > 0 && formData.append('devLanguageIdList', info.devLanguageIdList)
+    info.operateSysIdList && info.operateSysIdList.length > 0 && formData.append('operateSysIdList', info.operateSysIdList)
+    info.devToolIdList && info.devToolIdList.length > 0 && formData.append('devToolIdList', info.devToolIdList)
+    info.devDatabaseIdList && info.devDatabaseIdList.length > 0 && formData.append('devDatabaseIdList', info.devDatabaseIdList)
+    info.devAppServerIdList && info.devAppServerIdList.length > 0 && formData.append('devAppServerIdList', info.devAppServerIdList)
+    info.devFrameworkIdList && info.devFrameworkIdList.length > 0 && formData.append('devFrameworkIdList', info.devFrameworkIdList)
+    info.serviceCustomerIdList && info.serviceCustomerIdList.length > 0 && formData.append('serviceCustomerIdList', info.serviceCustomerIdList)
+    info.busTypeIdList && info.busTypeIdList.length > 0 && formData.append('busTypeIdList', info.busTypeIdList)
+
+    info.selectedProjectId && (info.selectedProjectId !== -1) && formData.append('selectedProjectId', info.selectedProjectId)
     formData.append('pageNo', params.pageNo)
     function makeData (originalData) {
       return {

@@ -5,17 +5,17 @@
         <mu-select-field class="item" v-model="chartBgData.personalTarget" @change="changePersonalTarget" label="个人信息指标" hintText="请选择">
           <mu-menu-item v-for="item in chartBgData.personalDicList" :key="item.id + ''" :value="item.dicValue + ''" :title="item.dicLabel"/>
         </mu-select-field>
-        <mu-select-field class="item" v-model="chartBgData.techTarget" label="技术指标" hintText="请选择">
+        <mu-select-field class="item" v-model="chartBgData.techTarget" @change="changeTechTarget" label="技术指标" hintText="请选择">
           <mu-menu-item v-for="item in chartBgData.techDicList" :key="item.id + ''" :value="item.dicValue + ''" :title="item.dicLabel"/>
         </mu-select-field>
-        <mu-select-field class="item" v-model="chartBgData.projectTarget" label="项目指标" hintText="请选择">
-          <mu-menu-item v-for="item in chartBgData.projectDicList" :key="item.id + ''" :value="item.dicValue + ''" :title="item.dicLabel"/>
-        </mu-select-field>
-        <mu-select-field class="item" v-model="chartBgData.projectTarget" label="时间跨度" hintText="请选择">
-          <mu-menu-item value="0" title="日"/>
-          <mu-menu-item value="1" title="月"/>
-          <mu-menu-item value="2" title="年"/>
-        </mu-select-field>
+        <!--<mu-select-field class="item" v-model="chartBgData.projectTarget" label="项目指标" hintText="请选择">-->
+          <!--<mu-menu-item v-for="item in chartBgData.projectDicList" :key="item.id + ''" :value="item.dicValue + ''" :title="item.dicLabel"/>-->
+        <!--</mu-select-field>-->
+        <!--<mu-select-field class="item" v-model="chartBgData.projectTarget" label="时间跨度" hintText="请选择">-->
+          <!--<mu-menu-item value="0" title="日"/>-->
+          <!--<mu-menu-item value="1" title="月"/>-->
+          <!--<mu-menu-item value="2" title="年"/>-->
+        <!--</mu-select-field>-->
       </div>
       <div class="chart">
         <div class="show" ref="show1"></div>
@@ -51,8 +51,14 @@
       })
     },
     methods: {
+      changeTechTarget(value) {
+        this.getChartData('1', value)
+      },
       changePersonalTarget(value) {
-        projectAnalyze.getChartPieData.bind(this)({type: '0', dicValue: value}, (data) => {
+        this.getChartData('0', value)
+      },
+      getChartData(type, value) {
+        projectAnalyze.getChartPieData.bind(this)({type: type, dicValue: value}, (data) => {
           this.makeCharts1(data)
           let xAxisData = []
           let seriesData = []

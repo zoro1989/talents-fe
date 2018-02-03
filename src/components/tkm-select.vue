@@ -1,6 +1,6 @@
 <template>
   <mu-select-field class="tkm-select" :value="content" :labelFocusClass="['label-foucs']"
-                   :label="label" :errorText="errorText" :hintText="hintText"  @change="onChange">
+                   :label="label" :errorText="errorText" :disabled="isValid" :hintText="hintText"  @change="onChange">
     <slot></slot>
   </mu-select-field>
 </template>
@@ -21,6 +21,10 @@ export default {
       default: ''
     },
     notEmpty: {
+      type: Boolean,
+      default: false
+    },
+    isValid: {
       type: Boolean,
       default: false
     }

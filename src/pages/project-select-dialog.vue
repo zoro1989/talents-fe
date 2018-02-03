@@ -44,7 +44,7 @@
       }
     },
     created() {
-      this.selectedProjName = this.name
+      this.selectedProjName = this.name ? this.name : ''
     },
     methods: {
       selectProject() {

@@ -16,7 +16,7 @@
       <mu-tbody>
         <mu-tr v-for="(row, index) in tableData.rows"  :key="index" :selected="row.selected" :class="{'row-section':row.sections}">
           <template v-if="row.sections && row.sections.length > 0">
-            <mu-td><mu-checkbox v-if="!isdialog" v-model="row.selected" /><mu-radio v-if="isdialog" :nativeValue="row.id + ''" v-model="dialogProjName" /></mu-td>
+            <mu-td><mu-checkbox v-if="!isdialog" v-model="row.selected" /></mu-td>
             <mu-td v-for="(section, index) in row.sections" :key="index">{{section.value}}</mu-td>
             <mu-td v-if="!isdialog" >
               <mu-raised-button v-for="(operation, index) in row.operations" :key="index" :label="operation.name"  @click="optHandler(operation.action, row)" :backgroundColor="operation.type==='normal' ? '#337ab7' : operation.type==='delete'?'#a2d200':'#1ccdaa'"/>
@@ -204,7 +204,9 @@
       min-width: 0!important
     .mu-tr
       &.row-section
-        background-color: rgba(255,255,255,0.1)
+        background: #418bca
+      &.row-section:hover
+        background: rgba(65,139,202, 0.8)
       .mu-th,.mu-td
         height: 48px
         line-height: 48px
@@ -220,7 +222,7 @@
       .mu-th:last-child,.mu-td:last-child
         display: flex
         align-items: center
-        justify-content: center
+        justify-content: flex-start
         box-sizing: border-box
         .mu-raised-button
           min-width: 0!important

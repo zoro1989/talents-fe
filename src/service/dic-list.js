@@ -3,43 +3,84 @@
  */
 import httpHandler from 'http/http-handler'
 import uris from 'router/uris'
+function _normalizeDics(list) {
+  let ret = []
+  list.map((row) => {
+    ret.push({
+      id: row.id,
+      type: row.type,
+      selected: false,
+      isValid: false,
+      sections: [
+        {
+          name: 'dicValue',
+          value: row.dicValue || '--'
+        },
+        {
+          name: 'dicLabel',
+          value: row.dicLabel || '--'
+        }
+      ],
+      operations: [
+        {
+          name: '删除',
+          action: 'deleteDic',
+          type: 'delete'
+        },
+        {
+          name: '编辑',
+          action: 'editDic',
+          type: 'normal'
+        }
+      ]
+    })
+    let parentType = row.type
+    row.dicItems.map((item) => {
+      ret.push(
+        {
+          id: item.id,
+          type: parentType,
+          selected: false,
+          isValid: true,
+          columns: [
+            {
+              name: 'dicValue',
+              value: item.dicValue || '--'
+            },
+            {
+              name: 'dicLabel',
+              value: item.dicLabel || '--'
+            }
+          ],
+          operations: [
+            {
+              name: '删除',
+              action: 'deleteDic',
+              type: 'delete'
+            },
+            {
+              name: '编辑',
+              action: 'editDic',
+              type: 'normal'
+            }
+          ]
+        }
+      )
+    })
+  })
+  return ret
+}
 export default {
   getList (params, success, fail) {
     let formData = new FormData()
     formData.append('findContent', params.findContent)
     formData.append('pageNo', params.pageNo)
     function makeData (originalData) {
+      let rows = _normalizeDics(originalData.data.list)
       return {
         message: originalData.message,
         totalCount: originalData.data.total,
-        rows: originalData.data.list.map((row) => {
-          return {
-            id: row.id,
-            selected: false,
-            columns: [
-              {
-                name: 'dicValue',
-                value: row.dicValue || '--'
-              },
-              {
-                name: 'dicLabel',
-                value: row.dicLabel || '--'
-              }
-            ],
-            operations: [
-              {
-                name: '编辑',
-                action: 'editDic',
-                type: 'normal'
-              },
-              {
-                name: '删除',
-                action: 'deleteDic',
-                type: 'delete'
-              }
-            ]
-          }
-        })
+        rows: rows
       }
     }
     httpHandler.post.bind(this)(uris.dic.index, formData, success, fail, makeData)
@@ -82,9 +123,11 @@ export default {
   },
   save (params, success, fail) {
     let formData = new FormData()
-    for (let item in params.row) {
-      formData.append(item, params.row[item])
-    }
+    params.row['id'] && formData.append('id', params.row['id'])
+    params.row['dicValue'] && formData.append('dicValue', params.row['dicValue'])
+    params.row['dicLabel'] && formData.append('dicLabel', params.row['dicLabel'])
+    params.row['parentId'] && formData.append('parentId', params.row['parentId'])
+    params.row['type'] && formData.append('type', params.row['type'])
     function makeData (originalData) {
       return originalData
     }

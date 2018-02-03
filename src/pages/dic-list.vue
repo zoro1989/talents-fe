@@ -14,6 +14,10 @@
         <tkm-select class="item" :content.sync="dialogForm.dicParent" label="选择所属栏目" :notEmpty="notRequired">
           <mu-menu-item v-for="item in parents" :key="item.id + ''" :value="item.id + ''" :title="item.dicLabel"/>
         </tkm-select>
+        <tkm-select class="item" :content.sync="dialogForm.dicType" :isValid="dialogForm.dicValid" label="选择字典类型">
+          <mu-menu-item value="0" title="个人信息字典"/>
+          <mu-menu-item value="1" title="项目信息字典"/>
+        </tkm-select>
       </div>
     </tkm-dialog>
     <tkm-dialog ref="dialog" title="警告" cancelLabel="取消" confirmLabel="确定">
@@ -40,7 +44,9 @@ export default{
       dialogForm: {
         value: '',
         label: '',
-        dicParent: ''
+        dicParent: '',
+        dicType: '',
+        dicValid: true
       },
       tableData: [],
       searchOperations: [
@@ -88,12 +94,15 @@ export default{
         dicList.editDic.bind(this)({row: row, type: this.type}, (data) => {
           this.dialogForm.value = data.dicValue
           this.dialogForm.label = data.dicLabel
-          this.dialogForm.dicParent = data.parentId + ''
+          this.dialogForm.dicParent = data.parentId ? data.parentId + '' : ''
+          this.dialogForm.dicType = row.type + ''
+          this.dialogForm.dicValid = row.isValid
           this.parents = data.dicParents
           this.$refs.dialogForm.openDialog(() => {
             row.dicValue = this.dialogForm.value
             row.dicLabel = this.dialogForm.label
             row.parentId = this.dialogForm.dicParent
+            row.type = this.dialogForm.dicType
             dicList.save.bind(this)({row: row}, (data) => {
               this.$refs.dialog.hide()
               success(data.message)

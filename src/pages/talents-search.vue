@@ -16,7 +16,7 @@
         <mu-date-picker class="item" label="入社日期(止)"  mode="landscape" v-model="info.joinDayEnd" hintText="请输入"/>
       </div>
     </div>
-    <mu-list-item class="advance-search" slot="nested" title="高级检索" :open="open" @click="toggleShow" :toggleNested="toggleNested">
+    <mu-list-item class="advance-search" slot="nested" title="高级检索" :open="open1" @click="toggleShow1" :toggleNested="toggleNested">
       <div slot="nested">
         <div class="search-item">
           <mu-date-picker class="item" label="实习开始日(起)" mode="landscape" v-model="info.practiceStartDateStart" hintText="请输入"/>
@@ -34,7 +34,7 @@
           <mu-date-picker class="item" label="转正日期(起)"  mode="landscape" v-model="info.formalDateStart" hintText="请输入"/>
           <mu-date-picker class="item" label="转正日期(止)"  mode="landscape" v-model="info.formalDateEnd" hintText="请输入"/>
           <mu-select-field class="item" :multiple="multiple" v-model="info.jobStatusIdList" hintText="请选择"  label="在职状态" :notEmpty="notRequired">
-            <mu-menu-item v-for="item in info.yesNoList" :key="item.id + ''" :value="item.dicValue + ''" :title="item.dicLabel"/>
+            <mu-menu-item v-for="item in info.jobStatusList" :key="item.id + ''" :value="item.dicValue + ''" :title="item.dicLabel"/>
           </mu-select-field>
         </div>
         <div class="search-item">
@@ -80,14 +80,14 @@
           </mu-select-field>
         </div>
         <div class="search-item">
-          <mu-select-field class="item" :multiple="multiple" v-model="info.ismarried" label="婚姻" hintText="请选择" :notEmpty="notRequired">
-            <mu-menu-item v-for="item in info.yesNoList" :key="item.id + ''" :value="item.dicValue + ''" :title="item.dicLabel"/>
+          <mu-select-field class="item" :multiple="multiple" v-model="info.ismarriedIdList" label="婚姻" hintText="请选择" :notEmpty="notRequired">
+            <mu-menu-item v-for="item in info.ismarriedList" :key="item.id + ''" :value="item.dicValue + ''" :title="item.dicLabel"/>
           </mu-select-field>
-          <mu-select-field class="item" :multiple="multiple" v-model="info.hasbaby" label="生育" hintText="请选择" :notEmpty="notRequired">
-            <mu-menu-item v-for="item in info.yesNoList" :key="item.id + ''" :value="item.dicValue + ''" :title="item.dicLabel"/>
+          <mu-select-field class="item" :multiple="multiple" v-model="info.hasbabyIdList" label="生育" hintText="请选择" :notEmpty="notRequired">
+            <mu-menu-item v-for="item in info.hasbabyList" :key="item.id + ''" :value="item.dicValue + ''" :title="item.dicLabel"/>
           </mu-select-field>
-          <mu-select-field class="item" :multiple="multiple" v-model="info.ispartied" label="是否党员" hintText="请选择" :notEmpty="notRequired">
-            <mu-menu-item v-for="item in info.yesNoList" :key="item.id + ''" :value="item.dicValue + ''" :title="item.dicLabel"/>
+          <mu-select-field class="item" :multiple="multiple" v-model="info.ispartiedIdList" label="是否党员" hintText="请选择" :notEmpty="notRequired">
+            <mu-menu-item v-for="item in info.ispartiedList" :key="item.id + ''" :value="item.dicValue + ''" :title="item.dicLabel"/>
           </mu-select-field>
           <mu-select-field class="item" :multiple="multiple" v-model="info.departmentIdList" label="部门" hintText="请选择" :notEmpty="notRequired">
             <mu-menu-item v-for="item in info.departmentList" :key="item.id + ''" :value="item.dicValue + ''" :title="item.dicLabel"/>
@@ -100,10 +100,47 @@
           <mu-select-field class="item" :multiple="multiple" v-model="info.tLevelIdList" label="职级职等" hintText="请选择" :notEmpty="notRequired">
             <mu-menu-item v-for="item in info.tLevelList" :key="item.id + ''" :value="item.dicValue + ''" :title="item.dicLabel"/>
           </mu-select-field>
-          <mu-select-field class="item" :multiple="multiple" v-model="info.studentLine" label="入职批次" hintText="请选择" :notEmpty="notRequired">
+          <mu-select-field class="item" :multiple="multiple" v-model="info.studentLineIdList" label="入职批次" hintText="请选择" :notEmpty="notRequired">
             <mu-menu-item v-for="item in info.studentLineList" :key="item.id + ''" :value="item.dicValue + ''" :title="item.dicLabel"/>
           </mu-select-field>
         </div>
+      </div>
+    </mu-list-item>
+    <mu-list-item class="advance-search" slot="nested" title="技能检索" :open="open2" @click="toggleShow2" :toggleNested="toggleNested">
+      <div slot="nested">
+        <div class="search-item">
+          <mu-select-field class="item" :multiple="multiple" v-model="info.devLanguageIdList" label="开发语言" hintText="请选择">
+            <mu-menu-item v-for="item in info.devLanguageList" :key="item.id + ''" :value="item.dicValue + ''" :title="item.dicLabel"/>
+          </mu-select-field>
+          <mu-select-field class="item" :multiple="multiple" v-model="info.operateSysIdList" label="操作系统" hintText="请选择">
+            <mu-menu-item v-for="item in info.operateSysList" :key="item.id + ''" :value="item.dicValue + ''" :title="item.dicLabel"/>
+          </mu-select-field>
+          <mu-select-field class="item" :multiple="multiple" v-model="info.devToolIdList" label="开发工具" hintText="请选择">
+            <mu-menu-item v-for="item in info.devToolList" :key="item.id + ''" :value="item.dicValue + ''" :title="item.dicLabel"/>
+          </mu-select-field>
+          <mu-select-field class="item" :multiple="multiple" v-model="info.devDatabaseIdList" label="数据库" hintText="请选择">
+            <mu-menu-item v-for="item in info.devDatabaseList" :key="item.id + ''" :value="item.dicValue + ''" :title="item.dicLabel"/>
+          </mu-select-field>
+        </div>
+        <div class="search-item">
+          <mu-select-field class="item" :multiple="multiple" v-model="info.devAppServerIdList" label="WEB服务器" hintText="请选择">
+            <mu-menu-item v-for="item in info.devAppServerList" :key="item.id + ''" :value="item.dicValue + ''" :title="item.dicLabel"/>
+          </mu-select-field>
+          <mu-select-field class="item" :multiple="multiple" v-model="info.devFrameworkIdList" label="开发框架" hintText="请选择">
+            <mu-menu-item v-for="item in info.devFrameworkList" :key="item.id + ''" :value="item.dicValue + ''" :title="item.dicLabel"/>
+          </mu-select-field>
+          <mu-select-field class="item" :multiple="multiple" v-model="info.serviceCustomerIdList" label="服务客户" hintText="请选择">
+            <mu-menu-item v-for="item in info.serviceCustomerList" :key="item.id + ''" :value="item.dicValue + ''" :title="item.dicLabel"/>
+          </mu-select-field>
+          <mu-select-field class="item" :multiple="multiple" v-model="info.busTypeIdList" label="业务类型" hintText="请选择">
+            <mu-menu-item v-for="item in info.busTypeList" :key="item.id + ''" :value="item.dicValue + ''" :title="item.dicLabel"/>
+          </mu-select-field>
+        </div>
+      </div>
+    </mu-list-item>
+    <mu-list-item class="advance-search" slot="nested" title="项目检索" :open="open3" @click="toggleShow3" :toggleNested="toggleNested">
+      <div slot="nested">
+        <project-select-dialog :content.sync="selectedProjectId" ></project-select-dialog>
       </div>
     </mu-list-item>
     <div class="button-group">
@@ -117,11 +154,13 @@
 <script>
 import talentsSearch from 'service/talents-search'
 import TkmSelect from 'components/tkm-select'
+import ProjectSelectDialog from './project-select-dialog'
 import {talentsMixin, messageMinxin} from 'common/js/mixin'
 export default{
   mixins: [talentsMixin, messageMinxin],
   components: {
-    TkmSelect
+    TkmSelect,
+    ProjectSelectDialog
   },
   created () {
     talentsSearch.get.bind(this)({}, (data) => {
@@ -136,15 +175,25 @@ export default{
       info: {},
       notRequired: false,
       toggleNested: true,
-      open: false,
-      multiple: true
+      open1: false,
+      open2: false,
+      open3: false,
+      multiple: true,
+      selectedProjectId: -1
     }
   },
   methods: {
-    toggleShow() {
-      this.open = !this.open
+    toggleShow1() {
+      this.open1 = !this.open1
+    },
+    toggleShow2() {
+      this.open2 = !this.open2
+    },
+    toggleShow3() {
+      this.open3 = !this.open3
     },
     onSearch () {
+      this.info.selectedProjectId = this.selectedProjectId
       this.$router.push({
         name: 'talents-search-list',
         params: this.info

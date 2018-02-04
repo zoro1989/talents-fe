@@ -87,13 +87,18 @@
           </li>
           <li class="nav-item">
             <a href="javascript:void(0)" class="nav-link" :class="{'active': selectIndex === 2}"  @click="changeTab(2)">
-              <i class="fa fa-pencil"></i> <span class="nav-text">字典设置</span><b class="fa fa-plus dropdown-plus"></b>
+              <i class="fa fa-pencil"></i> <span class="nav-text">数据中心</span><b class="fa fa-plus dropdown-plus"></b>
             </a>
             <transition name="slide">
-              <ul class="dropdown-menu h1" v-show="subSelectIndex === 2">
+              <ul class="dropdown-menu h2" v-show="subSelectIndex === 2">
                 <li class="dropdown-item">
                   <router-link class="dropdown-link" to="dic-list">
                     <i class="fa fa-caret-right"></i> 字典设置
+                  </router-link>
+                </li>
+                <li class="dropdown-item">
+                  <router-link class="dropdown-link" to="talents-import">
+                    <i class="fa fa-caret-right"></i> 人才导入
                   </router-link>
                 </li>
               </ul>
@@ -123,10 +128,15 @@
               <i class="fa fa-desktop"></i> <span class="nav-text">人才</span><b class="fa fa-plus dropdown-plus"></b>
             </a>
             <transition name="slide">
-              <ul class="dropdown-menu h1" v-show="subSelectIndex === 4">
+              <ul class="dropdown-menu h2" v-show="subSelectIndex === 4">
                 <li class="dropdown-item">
                   <router-link class="dropdown-link" to="talents-search">
                     <i class="fa fa-caret-right"></i> 人才检索
+                  </router-link>
+                </li>
+                <li class="dropdown-item">
+                  <router-link class="dropdown-link" to="talents-search-list">
+                    <i class="fa fa-caret-right"></i> 人才列表
                   </router-link>
                 </li>
               </ul>

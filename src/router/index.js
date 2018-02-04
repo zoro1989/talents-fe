@@ -18,6 +18,7 @@ const TalentsSearchList = resolve => require(['@/pages/talents-search-list'], re
 const ProjectList = resolve => require(['@/pages/project-list'], resolve)
 const DicList = resolve => require(['@/pages/dic-list'], resolve)
 const ProjectAnalyze = resolve => require(['@/pages/project-analyze'], resolve)
+const TalentsImport = resolve => require(['@/pages/talents-import'], resolve)
 
 Vue.use(Router)
 
@@ -162,6 +163,14 @@ export default new Router({
             title: '字典列表'
           },
           component: DicList
+        },
+        {
+          path: '/talents-import',
+          name: 'talents-import',
+          meta: {
+            title: '人才导入'
+          },
+          component: TalentsImport
         },
         {
           path: '/project-analyze',

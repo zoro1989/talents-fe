@@ -162,9 +162,9 @@ export default{
           this.info.endDate = ''
           this.$refs.dialogForm.openDialog(() => {
             let newRow = {}
-            newRow.projName = this.info.projName
-            newRow.startDate = this.info.startDate
-            newRow.endDate = this.info.endDate
+            for (let key in this.info) {
+              newRow[key] = this.info[key]
+            }
             projectList.save.bind(this)({row: newRow}, (data) => {
               this.$refs.dialog.hide()
               success(data.message)

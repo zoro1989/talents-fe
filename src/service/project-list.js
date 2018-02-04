@@ -76,8 +76,8 @@ function _normalizeProjects(list) {
               value: item.contractCount || '--'
             },
             {
-              name: 'pubCount',
-              value: item.pubCount || '--'
+              name: 'putCount',
+              value: item.putCount || '--'
             }
           ],
           operations: [

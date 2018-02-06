@@ -13,7 +13,6 @@
 <script>
 import personalData from 'service/personal-data'
 import {talentsMixin, messageMinxin} from 'common/js/mixin'
-import EventBus from 'utilities/event-bus'
 import timestampToDateTime from 'utilities/timestamp-to-date-time'
 export default{
   mixins: [talentsMixin, messageMinxin],
@@ -25,12 +24,6 @@ export default{
     }, (err) => {
       console.log(err)
 //      this.$message.error(err)
-    })
-    personalData.getRoleAndPermissions.bind(this)({}, (data) => {
-      EventBus.permissions = data.permissions
-      EventBus.roles = data.roles
-    }, (err) => {
-      console.log('权限获取失败：' + err)
     })
   },
   data () {

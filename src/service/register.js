@@ -3,9 +3,10 @@ import uris from 'router/uris'
 export default {
   submitRegister (params, success, fail) {
     let formData = new FormData()
-    for (let item in params.form) {
-      formData.append(item, params.form[item])
-    }
+    formData.append('vcode', params.form['vcode'])
+    formData.append('nickname', params.form['nickname'])
+    formData.append('email', params.form['username'])
+    formData.append('pswd', params.form['password'])
     function makeData (originalData) {
       return originalData
     }

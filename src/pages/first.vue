@@ -27,7 +27,7 @@
               <i class="fa fa-tint"></i> <span class="nav-text">个人中心</span><b class="fa fa-plus dropdown-plus"></b>
             </a>
             <transition name="slide">
-              <ul class="dropdown-menu h5" v-show="subSelectIndex === 0">
+              <ul class="dropdown-menu" ref="dropdownMenu" :class="menuHeightCls(0)" v-show="subSelectIndex === 0">
                 <li class="dropdown-item">
                   <router-link class="dropdown-link" to="/personal-data">
                     <i class="fa fa-caret-right"></i> 个人资料
@@ -48,11 +48,13 @@
                     <i class="fa fa-caret-right"></i> 我的权限
                   </router-link>
                 </li>
-                <li class="dropdown-item">
-                  <router-link class="dropdown-link" to="/member-list">
-                    <i class="fa fa-caret-right"></i> 用户列表
-                  </router-link>
-                </li>
+                <has-any-roles :roles="'SYS_ADMIN'">
+                  <li class="dropdown-item">
+                    <router-link class="dropdown-link" to="/member-list">
+                      <i class="fa fa-caret-right"></i> 用户列表
+                    </router-link>
+                  </li>
+                </has-any-roles>
               </ul>
             </transition>
           </li>
@@ -155,8 +157,13 @@
 import first from 'service/first'
 import {messageMinxin} from 'common/js/mixin'
 import EventBus from 'utilities/event-bus'
+import HasAnyRoles from 'components/has-any-roles'
+import {clearRoles, clearPermissions} from 'common/js/cache'
 export default {
   mixins: [messageMinxin],
+  components: {
+    HasAnyRoles
+  },
   created () {
     first.get.bind(this)({}, (data) => {
       this.nickname = data.nickname
@@ -164,7 +171,7 @@ export default {
       console.log(err)
 //      this.$message.error(err)
     })
-    // this.changeView('member-list')
+    // this.changeView('personal-data')
   },
   data () {
     return {
@@ -180,6 +187,13 @@ export default {
     }
   },
   methods: {
+    menuHeightCls() {
+      let res = ''
+      this.$nextTick(() => {
+        res = 'h' + this.$refs.dropdownMenu.children.length
+      })
+      return res
+    },
     changeTab(index) {
       if (this.subSelectIndex === -1) {
         this.subSelectIndex = this.selectIndex
@@ -203,6 +217,8 @@ export default {
 //        this.$message.error(err)
       })
       EventBus.backUrl = ''
+      clearRoles()
+      clearPermissions()
       this.$router.replace('/login')
     }
   }

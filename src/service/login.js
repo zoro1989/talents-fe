@@ -7,7 +7,18 @@ export default {
       formData.append(item, params.form[item])
     }
     function makeData (originalData) {
-      return originalData
+      let permissions = []
+      let roles = []
+      originalData.data.map((role) => {
+        roles.push(role.type)
+        role.permissions.map((permission) => {
+          permissions.push(permission.url)
+        })
+      })
+      return {
+        permissions: permissions,
+        roles: roles
+      }
     }
     httpHandler.post.bind(this)(uris.user.submitLogin, formData, success, fail, makeData)
   }

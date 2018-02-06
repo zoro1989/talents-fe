@@ -31,6 +31,8 @@ import login from 'service/login'
 import EventBus from 'utilities/event-bus'
 import TkmLoading from 'components/tkm-loading'
 import {messageMinxin} from 'common/js/mixin'
+import {SUCCESS_URI, REGISTER_URI} from 'http/config'
+import {saveRoles, savePermissions, clearRoles, clearPermissions} from 'common/js/cache'
 export default {
   mixins: [messageMinxin],
   components: {
@@ -56,7 +58,11 @@ export default {
         this.form.rememberMe = false
       }
       login.submitLogin.bind(this)({form: this.form}, (data) => {
-        let backUrl = EventBus.backUrl ? EventBus.backUrl : 'member-list'
+        clearRoles()
+        clearPermissions()
+        savePermissions(data.permissions)
+        saveRoles(data.roles)
+        let backUrl = EventBus.backUrl ? EventBus.backUrl : SUCCESS_URI
 //        this.$message({
 //          message: data.message,
 //          type: 'success'
@@ -69,7 +75,7 @@ export default {
       })
     },
     onRegister () {
-      this.$router.replace('register')
+      this.$router.replace(REGISTER_URI)
     }
   }
 }

@@ -1,33 +1,47 @@
 <template>
-  <section id="has-any-roles" v-if="isShow">
+  <div id="has-any-roles" v-if="isShow">
     <slot></slot>
-  </section>
+  </div>
 </template>
 <script>
-//  import EventBus from 'utilities/event-bus'
-import isArrayContains from 'utilities/is-array-contains'
-export default{
-  props: {
-    roles: {}
-  },
-  created () {
-  // let roles = EventBus.roles
-    let roles = ['SYS_ADMIN']
-    if (this.roles) {
-      let roleArr = this.roles.split(',')
-      roleArr.map((role) => {
-        if (isArrayContains(roles, role)) {
-          this.isShow = true
+  import isArrayContains from 'utilities/is-array-contains'
+  import {loadRoles} from 'common/js/cache'
+  export default{
+    props: {
+      roles: {
+        type: String,
+        default: ''
+      }
+    },
+    created() {
+
+    },
+    watch: {
+      roles: {
+        immediate: true,
+        deep: true,
+        handler: function (newVal, oldVal) {
+          let roles = loadRoles()
+//      let roles = ['SYS_ADMIN']
+          console.log(newVal)
+          console.log(roles)
+          if (newVal) {
+            let roleArr = newVal.split(',')
+            roleArr.map((role) => {
+              if (isArrayContains(roles, role)) {
+                this.isShow = true
+              }
+            })
+          }
         }
-      })
-    }
-  },
-  data () {
-    return {
-      isShow: false
+      }
+    },
+    data () {
+      return {
+        isShow: false
+      }
     }
   }
-}
 </script>
 <style scoped>
   #has-any-roles{

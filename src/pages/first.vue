@@ -58,12 +58,13 @@
               </ul>
             </transition>
           </li>
+          <has-any-roles :roles="'SYS_ADMIN'">
           <li class="nav-item">
             <a href="javascript:void(0)" class="nav-link" :class="{'active': selectIndex === 1}" @click="changeTab(1)" >
               <i class="fa fa-tachometer"></i> <span class="nav-text">权限管理</span><b class="fa fa-plus dropdown-plus"></b>
             </a>
             <transition name="slide">
-              <ul class="dropdown-menu h4" v-show="subSelectIndex === 1">
+              <ul class="dropdown-menu" ref="dropdownMenu" :class="menuHeightCls(1)" v-show="subSelectIndex === 1">
                 <li class="dropdown-item">
                   <router-link class="dropdown-link" to="role-list">
                     <i class="fa fa-caret-right"></i> 角色列表
@@ -87,12 +88,14 @@
               </ul>
             </transition>
           </li>
+          </has-any-roles>
+          <has-any-roles :roles="'SYS_ADMIN'">
           <li class="nav-item">
             <a href="javascript:void(0)" class="nav-link" :class="{'active': selectIndex === 2}"  @click="changeTab(2)">
               <i class="fa fa-pencil"></i> <span class="nav-text">数据中心</span><b class="fa fa-plus dropdown-plus"></b>
             </a>
             <transition name="slide">
-              <ul class="dropdown-menu h2" v-show="subSelectIndex === 2">
+              <ul class="dropdown-menu" ref="dropdownMenu" :class="menuHeightCls(2)" v-show="subSelectIndex === 2">
                 <li class="dropdown-item">
                   <router-link class="dropdown-link" to="dic-list">
                     <i class="fa fa-caret-right"></i> 字典设置
@@ -106,12 +109,14 @@
               </ul>
             </transition>
           </li>
+          </has-any-roles>
+          <has-any-roles :roles="'SYS_ADMIN'">
           <li class="nav-item">
             <a href="javascript:void(0)" class="nav-link" :class="{'active': selectIndex === 3}"  @click="changeTab(3)">
               <i class="fa fa-bar-chart-o"></i> <span class="nav-text">项目</span><b class="fa fa-plus dropdown-plus"></b>
             </a>
             <transition name="slide">
-              <ul class="dropdown-menu h2" v-show="subSelectIndex === 3">
+              <ul class="dropdown-menu" ref="dropdownMenu" :class="menuHeightCls(3)" v-show="subSelectIndex === 3">
                 <li class="dropdown-item">
                   <router-link class="dropdown-link" to="project-analyze">
                     <i class="fa fa-caret-right"></i> 项目分析
@@ -125,12 +130,14 @@
               </ul>
             </transition>
           </li>
+          </has-any-roles>
+          <has-any-roles :roles="'SYS_ADMIN'">
           <li class="nav-item">
             <a href="javascript:void(0)" class="nav-link" :class="{'active': selectIndex === 4}"  @click="changeTab(4)">
               <i class="fa fa-desktop"></i> <span class="nav-text">人才</span><b class="fa fa-plus dropdown-plus"></b>
             </a>
             <transition name="slide">
-              <ul class="dropdown-menu h2" v-show="subSelectIndex === 4">
+              <ul class="dropdown-menu" ref="dropdownMenu" :class="menuHeightCls(4)" v-show="subSelectIndex === 4">
                 <li class="dropdown-item">
                   <router-link class="dropdown-link" to="talents-search">
                     <i class="fa fa-caret-right"></i> 人才检索
@@ -139,6 +146,21 @@
                 <li class="dropdown-item">
                   <router-link class="dropdown-link" to="talents-search-list">
                     <i class="fa fa-caret-right"></i> 人才列表
+                  </router-link>
+                </li>
+              </ul>
+            </transition>
+          </li>
+          </has-any-roles>
+          <li class="nav-item">
+            <a href="javascript:void(0)" class="nav-link" :class="{'active': selectIndex === 5}"  @click="changeTab(5)">
+              <i class="fa fa-desktop"></i> <span class="nav-text">工具</span><b class="fa fa-plus dropdown-plus"></b>
+            </a>
+            <transition name="slide">
+              <ul class="dropdown-menu" ref="dropdownMenu" :class="menuHeightCls(5)" v-show="subSelectIndex === 5">
+                <li class="dropdown-item">
+                  <router-link class="dropdown-link" to="code-convertor">
+                    <i class="fa fa-caret-right"></i> 代码转换
                   </router-link>
                 </li>
               </ul>
@@ -187,11 +209,14 @@ export default {
     }
   },
   methods: {
-    menuHeightCls() {
+    menuHeightCls(index) {
       let res = ''
-      this.$nextTick(() => {
+      setTimeout(() => {
+        if (!this.$refs.dropdownMenu) {
+          return
+        }
         res = 'h' + this.$refs.dropdownMenu.children.length
-      })
+      }, 200)
       return res
     },
     changeTab(index) {

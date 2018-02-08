@@ -19,6 +19,7 @@ const ProjectList = resolve => require(['@/pages/project-list'], resolve)
 const DicList = resolve => require(['@/pages/dic-list'], resolve)
 const ProjectAnalyze = resolve => require(['@/pages/project-analyze'], resolve)
 const TalentsImport = resolve => require(['@/pages/talents-import'], resolve)
+const CodeConvertor = resolve => require(['@/pages/code-convertor'], resolve)
 
 Vue.use(Router)
 
@@ -179,6 +180,14 @@ export default new Router({
             title: '项目分析'
           },
           component: ProjectAnalyze
+        },
+        {
+          path: '/code-convertor',
+          name: 'code-convertor',
+          meta: {
+            title: '代码转换'
+          },
+          component: CodeConvertor
         }
       ]
     }

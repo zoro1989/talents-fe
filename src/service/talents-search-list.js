@@ -9,7 +9,6 @@ export default {
   getList (params, success, fail) {
     let formData = new FormData()
     let info = params.info
-    console.log(info)
     info.staffNo && formData.append('staffNo', info.staffNo)
     info.name && formData.append('name', info.name)
     info.nameKana && formData.append('nameKana', info.nameKana)
@@ -124,7 +123,6 @@ export default {
   getStaffInfo (params, success, fail) {
     function makeData (originalData) {
       let res = originalData.data
-      console.log(res)
       for (let key in res) {
         if (key === 'sex' || key === 'trialResult' || key === 'jobStatus' || key === 'education' ||
           key === 'trainingMode' || key === 'degree' || key === 'jpLevel' || key === 'enLevel' ||

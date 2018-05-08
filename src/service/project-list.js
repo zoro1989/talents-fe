@@ -131,7 +131,6 @@ export default {
   editProject (params, success, fail) {
     function makeData (originalData) {
       let res = originalData.data
-      console.log(res)
       res.startDate = dateTime(res.startDate).split(' ')[0]
       res.endDate = dateTime(res.startDate).split(' ')[0]
       res.projectItems = res.projectItems.map((item) => {

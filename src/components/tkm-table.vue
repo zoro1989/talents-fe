@@ -169,10 +169,7 @@
       },
       showSuccess (msg) {
         if (msg) {
-  //        this.$message({
-  //          message: msg,
-  //          type: 'success'
-  //        })
+          this.showMsgBox(msg)
         }
         this.$nextTick(() => {
           this.$refs.loading.hide()

@@ -40,7 +40,6 @@ export default {
     httpHandler.post.bind(this)(uris.permission.index, formData, success, fail, makeData)
   },
   delete (params, success, fail) {
-    console.log(params)
     let formData = new FormData()
     params.tableData.rows.map((row) => {
       if (row.selected) {

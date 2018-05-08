@@ -53,7 +53,7 @@
       initData (params, success, fail) {
         projectList.getList.bind(this)({findContent: params.findContent, pageNo: params.pageNo}, (data) => {
           this.tableData = data
-          success(data.message)
+          success()
         }, (err) => {
           fail(err)
         })

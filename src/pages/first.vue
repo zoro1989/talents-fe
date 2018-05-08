@@ -27,7 +27,7 @@
               <i class="fa fa-tint"></i> <span class="nav-text">个人中心</span><b class="fa fa-plus dropdown-plus"></b>
             </a>
             <transition name="slide">
-              <ul class="dropdown-menu" ref="dropdownMenu" :class="menuHeightCls(0)" v-show="subSelectIndex === 0">
+              <ul class="dropdown-menu" ref="dropdownMenu" v-show="subSelectIndex === 0">
                 <li class="dropdown-item">
                   <router-link class="dropdown-link" to="/personal-data">
                     <i class="fa fa-caret-right"></i> 个人资料
@@ -64,7 +64,7 @@
               <i class="fa fa-tachometer"></i> <span class="nav-text">权限管理</span><b class="fa fa-plus dropdown-plus"></b>
             </a>
             <transition name="slide">
-              <ul class="dropdown-menu" ref="dropdownMenu" :class="menuHeightCls(1)" v-show="subSelectIndex === 1">
+              <ul class="dropdown-menu" ref="dropdownMenu" v-show="subSelectIndex === 1">
                 <li class="dropdown-item">
                   <router-link class="dropdown-link" to="role-list">
                     <i class="fa fa-caret-right"></i> 角色列表
@@ -95,7 +95,7 @@
               <i class="fa fa-pencil"></i> <span class="nav-text">数据中心</span><b class="fa fa-plus dropdown-plus"></b>
             </a>
             <transition name="slide">
-              <ul class="dropdown-menu" ref="dropdownMenu" :class="menuHeightCls(2)" v-show="subSelectIndex === 2">
+              <ul class="dropdown-menu" ref="dropdownMenu" v-show="subSelectIndex === 2">
                 <li class="dropdown-item">
                   <router-link class="dropdown-link" to="dic-list">
                     <i class="fa fa-caret-right"></i> 字典设置
@@ -116,7 +116,7 @@
               <i class="fa fa-bar-chart-o"></i> <span class="nav-text">项目</span><b class="fa fa-plus dropdown-plus"></b>
             </a>
             <transition name="slide">
-              <ul class="dropdown-menu" ref="dropdownMenu" :class="menuHeightCls(3)" v-show="subSelectIndex === 3">
+              <ul class="dropdown-menu" ref="dropdownMenu" v-show="subSelectIndex === 3">
                 <li class="dropdown-item">
                   <router-link class="dropdown-link" to="project-analyze">
                     <i class="fa fa-caret-right"></i> 项目分析
@@ -137,14 +137,14 @@
               <i class="fa fa-desktop"></i> <span class="nav-text">人才</span><b class="fa fa-plus dropdown-plus"></b>
             </a>
             <transition name="slide">
-              <ul class="dropdown-menu" ref="dropdownMenu" :class="menuHeightCls(4)" v-show="subSelectIndex === 4">
+              <ul class="dropdown-menu" ref="dropdownMenu" v-show="subSelectIndex === 4">
                 <li class="dropdown-item">
                   <router-link class="dropdown-link" to="talents-search">
                     <i class="fa fa-caret-right"></i> 人才检索
                   </router-link>
                 </li>
                 <li class="dropdown-item">
-                  <router-link class="dropdown-link" to="talents-search-list">
+                  <router-link class="dropdown-link" :to="{ path: 'talents-search-list', query: {type: 0}}">
                     <i class="fa fa-caret-right"></i> 人才列表
                   </router-link>
                 </li>
@@ -152,20 +152,40 @@
             </transition>
           </li>
           </has-any-roles>
-          <li class="nav-item">
-            <a href="javascript:void(0)" class="nav-link" :class="{'active': selectIndex === 5}"  @click="changeTab(5)">
-              <i class="fa fa-desktop"></i> <span class="nav-text">工具</span><b class="fa fa-plus dropdown-plus"></b>
-            </a>
-            <transition name="slide">
-              <ul class="dropdown-menu" ref="dropdownMenu" :class="menuHeightCls(5)" v-show="subSelectIndex === 5">
-                <li class="dropdown-item">
-                  <router-link class="dropdown-link" to="code-convertor">
-                    <i class="fa fa-caret-right"></i> 代码转换
-                  </router-link>
-                </li>
-              </ul>
-            </transition>
-          </li>
+          <!--<li class="nav-item">-->
+            <!--<a href="javascript:void(0)" class="nav-link" :class="{'active': selectIndex === 5}"  @click="changeTab(5)">-->
+              <!--<i class="fa fa-desktop"></i> <span class="nav-text">代码转换工具</span><b class="fa fa-plus dropdown-plus"></b>-->
+            <!--</a>-->
+            <!--<transition name="slide">-->
+              <!--<ul class="dropdown-menu" ref="dropdownMenu" v-show="subSelectIndex === 5">-->
+                <!--<li class="dropdown-item">-->
+                  <!--<router-link class="dropdown-link" to="code-convertor">-->
+                    <!--<i class="fa fa-caret-right"></i> c#转换vb-->
+                  <!--</router-link>-->
+                <!--</li>-->
+                <!--<li class="dropdown-item">-->
+                  <!--<router-link class="dropdown-link" to="code-convertor-vb">-->
+                    <!--<i class="fa fa-caret-right"></i> vb转换c#-->
+                  <!--</router-link>-->
+                <!--</li>-->
+                <!--<li class="dropdown-item">-->
+                  <!--<router-link class="dropdown-link" to="code-convertor-cshtml">-->
+                    <!--<i class="fa fa-caret-right"></i> cshtml转换vbhtml-->
+                  <!--</router-link>-->
+                <!--</li>-->
+                <!--<li class="dropdown-item">-->
+                  <!--<router-link class="dropdown-link" to="code-convertor-vbhtml">-->
+                    <!--<i class="fa fa-caret-right"></i> vbhtml转换cshtml-->
+                  <!--</router-link>-->
+                <!--</li>-->
+                <!--<li class="dropdown-item">-->
+                  <!--<router-link class="dropdown-link" to="code-convertor-h5">-->
+                    <!--<i class="fa fa-caret-right"></i> 老版html转换自适应html5-->
+                  <!--</router-link>-->
+                <!--</li>-->
+              <!--</ul>-->
+            <!--</transition>-->
+          <!--</li>-->
         </ul>
       </div>
       <div class="main">
@@ -187,10 +207,12 @@ export default {
     HasAnyRoles
   },
   created () {
+    EventBus.$on('usernamechange', (newName) => {
+      this.nickname = newName
+    })
     first.get.bind(this)({}, (data) => {
       this.nickname = data.nickname
-    }, (err) => {
-      console.log(err)
+    }, () => {
 //      this.$message.error(err)
     })
     // this.changeView('personal-data')
@@ -208,17 +230,20 @@ export default {
       subSelectIndex: 0
     }
   },
+  mounted() {
+    let menus = document.querySelectorAll('.dropdown-menu')
+    if (!menus || menus.length === 0) {
+      return
+    }
+    for (let i = 0; i < menus.length; i++) {
+      let menu = menus[i]
+      if (menu.children && menu.children.length && menu.children.length > 0) {
+        let childCount = menu.children.length
+        menu.classList.add('h' + childCount)
+      }
+    }
+  },
   methods: {
-    menuHeightCls(index) {
-      let res = ''
-      setTimeout(() => {
-        if (!this.$refs.dropdownMenu) {
-          return
-        }
-        res = 'h' + this.$refs.dropdownMenu.children.length
-      }, 200)
-      return res
-    },
     changeTab(index) {
       if (this.subSelectIndex === -1) {
         this.subSelectIndex = this.selectIndex
@@ -237,8 +262,7 @@ export default {
 //          type: 'success',
 //          message: '退出登录'
 //        })
-      }, (err) => {
-        console.log(err)
+      }, () => {
 //        this.$message.error(err)
       })
       EventBus.backUrl = ''

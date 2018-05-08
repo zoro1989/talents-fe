@@ -31,8 +31,7 @@ export default{
 //          message: data.message,
 //          type: 'success'
 //        })
-      }, (err) => {
-        console.log(err)
+      }, () => {
 //        this.$message.error(err)
       })
     }

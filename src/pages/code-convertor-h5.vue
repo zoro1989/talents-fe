@@ -7,8 +7,8 @@
                 :multiSelectable="multiSelectable" :height="height" >
         <mu-thead slot="header">
           <mu-tr>
-            <mu-th tooltip="C#">C#</mu-th>
-            <mu-th tooltip="VB.NET">VB.NET</mu-th>
+            <mu-th tooltip="旧版Html">旧版Html</mu-th>
+            <mu-th tooltip="新版HTML5">新版HTML5</mu-th>
           </mu-tr>
         </mu-thead>
         <mu-tbody v-if="showBody">
@@ -250,11 +250,11 @@
           let row = {}
           let columns = []
           let columnA = {}
-          columnA.url = 'http://localhost:8080/upload/cs/' + this.selectedProjName + '.cs'
-          columnA.name = this.selectedProjName + '.cs'
+          columnA.url = 'http://localhost:8080/upload/html/' + this.selectedProjName + '.txt'
+          columnA.name = this.selectedProjName + '.html'
           let columnB = {}
-          columnB.url = 'http://localhost:8080/upload/vb/' + this.selectedProjName + '.vb'
-          columnB.name = this.selectedProjName + '.vb'
+          columnB.url = 'http://localhost:8080/upload/h5/' + this.selectedProjName + '.txt'
+          columnB.name = this.selectedProjName + '.h5'
           columns.push(columnA)
           columns.push(columnB)
           row.columns = columns

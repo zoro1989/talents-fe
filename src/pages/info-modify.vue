@@ -13,6 +13,7 @@
 
 <script>
 import infoModify from 'service/info-modify'
+import EventBus from 'utilities/event-bus'
 import {talentsMixin, messageMinxin} from 'common/js/mixin'
 export default{
   mixins: [talentsMixin, messageMinxin],
@@ -21,8 +22,7 @@ export default{
       this.form.id = data.id
       this.form.nickname = data.nickname
       this.form.email = data.email
-    }, (err) => {
-      console.log(err)
+    }, () => {
 //      this.$message.error(err)
     })
   },
@@ -37,13 +37,15 @@ export default{
   },
   methods: {
     onSubmit () {
+      this.$refs.loading.show()
       infoModify.save.bind(this)({form: this.form}, (data) => {
+        EventBus.$emit('usernamechange', this.form.nickname)
+        this.showMsgBox('修改昵称成功')
 //        this.$message({
 //          message: '保存成功',
 //          type: 'success'
 //        })
-      }, (err) => {
-        console.log(err)
+      }, () => {
 //        this.$message.error(err)
       })
     }

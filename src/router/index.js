@@ -20,6 +20,10 @@ const DicList = resolve => require(['@/pages/dic-list'], resolve)
 const ProjectAnalyze = resolve => require(['@/pages/project-analyze'], resolve)
 const TalentsImport = resolve => require(['@/pages/talents-import'], resolve)
 const CodeConvertor = resolve => require(['@/pages/code-convertor'], resolve)
+const CodeConvertorVB = resolve => require(['@/pages/code-convertor-vb'], resolve)
+const CodeConvertorCshtml = resolve => require(['@/pages/code-convertor-cshtml'], resolve)
+const CodeConvertorVbhtml = resolve => require(['@/pages/code-convertor-vbhtml'], resolve)
+const CodeConvertorH5 = resolve => require(['@/pages/code-convertor-h5'], resolve)
 
 Vue.use(Router)
 
@@ -188,6 +192,38 @@ export default new Router({
             title: '代码转换'
           },
           component: CodeConvertor
+        },
+        {
+          path: '/code-convertor-vb',
+          name: 'code-convertor-vb',
+          meta: {
+            title: '代码转换'
+          },
+          component: CodeConvertorVB
+        },
+        {
+          path: '/code-convertor-cshtml',
+          name: 'code-convertor-cshtml',
+          meta: {
+            title: '代码转换'
+          },
+          component: CodeConvertorCshtml
+        },
+        {
+          path: '/code-convertor-vbhtml',
+          name: 'code-convertor-vbhtml',
+          meta: {
+            title: '代码转换'
+          },
+          component: CodeConvertorVbhtml
+        },
+        {
+          path: '/code-convertor-h5',
+          name: 'code-convertor-h5',
+          meta: {
+            title: '代码转换'
+          },
+          component: CodeConvertorH5
         }
       ]
     }

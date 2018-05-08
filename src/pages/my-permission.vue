@@ -18,8 +18,7 @@ export default{
   created () {
     myPermission.get.bind(this)({}, (data) => {
       this.roles = data
-    }, (err) => {
-      console.log(err)
+    }, () => {
 //      this.$message.error(err)
     })
   },

@@ -7,8 +7,8 @@
                 :multiSelectable="multiSelectable" :height="height" >
         <mu-thead slot="header">
           <mu-tr>
-            <mu-th tooltip="C#">C#</mu-th>
-            <mu-th tooltip="VB.NET">VB.NET</mu-th>
+            <mu-th tooltip="C#">VB.NET</mu-th>
+            <mu-th tooltip="VB.NET">C#</mu-th>
           </mu-tr>
         </mu-thead>
         <mu-tbody v-if="showBody">
@@ -255,8 +255,8 @@
           let columnB = {}
           columnB.url = 'http://localhost:8080/upload/vb/' + this.selectedProjName + '.vb'
           columnB.name = this.selectedProjName + '.vb'
-          columns.push(columnA)
           columns.push(columnB)
+          columns.push(columnA)
           row.columns = columns
 
           this.tableData.rows.push(row)

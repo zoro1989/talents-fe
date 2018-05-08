@@ -47,7 +47,8 @@ const uris = {
     search: '/staff/search.tkm',
     selectInfoById: '/staff/selectInfoById.tkm',
     save: '/staff/save.tkm',
-    import: '/staff/importTalents.tkm'
+    import: '/staff/importTalents.tkm',
+    findLastImportTime: '/staff/findLastImportTime.tkm'
   },
   project: {
     index: '/project/index.tkm',

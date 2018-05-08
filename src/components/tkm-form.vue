@@ -9,7 +9,6 @@ import {validate} from 'service/validate'
 export default{
   methods: {
     checkValid (validateItems) {
-      console.log(validateItems)
       if (!validate(validateItems)) {
         return false
       } else {

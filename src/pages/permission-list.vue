@@ -62,7 +62,7 @@ export default{
     initData (params, success, fail) {
       permissionList.getList.bind(this)({findContent: params.findContent, pageNo: params.pageNo}, (data) => {
         this.tableData = data
-        success(data.message)
+        success()
       }, (err) => {
         fail(err)
       })

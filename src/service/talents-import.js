@@ -11,5 +11,11 @@ export default {
       return originalData
     }
     httpHandler.post.bind(this)(uris.staff.import, formData, success, fail, makeData)
+  },
+  findLastImportTime(params, success, fail) {
+    function makeData (originalData) {
+      return originalData.data
+    }
+    httpHandler.get.bind(this)(uris.staff.findLastImportTime, {}, success, fail, makeData)
   }
 }

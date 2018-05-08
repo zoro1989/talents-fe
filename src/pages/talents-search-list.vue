@@ -2,6 +2,7 @@
   <div class="talents-search-list">
     <tkm-table :tableData="tableData"
                :headers="headers"
+               ref="tkmtable"
                :hasSearchBox="hasSearchBox"
                @init-data="initData"
                @search-operation="searchOperation"
@@ -223,6 +224,17 @@ export default{
       open4: true
     }
   },
+  watch: {
+    '$route': {
+      immediate: true,
+      deep: true,
+      handler: function(from, to) {
+        if (from.query.type === 0 && Object.keys(from.params).length === 0) {
+          this.$refs.tkmtable && this.$refs.tkmtable.pageChange(1)
+        }
+      }
+    }
+  },
   methods: {
     toggleShow1() {
       this.open1 = !this.open1
@@ -239,7 +251,7 @@ export default{
     initData (params, success, fail) {
       talentsSearchList.getList.bind(this)({info: this.$route.params, pageNo: params.pageNo}, (data) => {
         this.tableData = data
-        success(data.message)
+        success()
       }, (err) => {
         fail(err)
       })
@@ -263,7 +275,6 @@ export default{
               row[key] = this.info[key]
             }
             talentsSearchList.save.bind(this)({row: row}, (data) => {
-              this.$refs.dialog.hide()
               success(data.message)
             }, (err) => {
               fail(err)

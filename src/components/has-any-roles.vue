@@ -1,7 +1,7 @@
 <template>
-  <div id="has-any-roles" v-if="isShow">
+  <span id="has-any-roles" v-if="isShow">
     <slot></slot>
-  </div>
+  </span>
 </template>
 <script>
   import isArrayContains from 'utilities/is-array-contains'
@@ -23,8 +23,6 @@
         handler: function (newVal, oldVal) {
           let roles = loadRoles()
 //      let roles = ['SYS_ADMIN']
-          console.log(newVal)
-          console.log(roles)
           if (newVal) {
             let roleArr = newVal.split(',')
             roleArr.map((role) => {
@@ -44,7 +42,4 @@
   }
 </script>
 <style scoped>
-  #has-any-roles{
-    display: inline-block;
-  }
 </style>

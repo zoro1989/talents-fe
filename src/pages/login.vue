@@ -11,7 +11,7 @@
     </div>
     <div class="input-group">
       <div class="input">
-        <mu-text-field label="密码" v-model="form.pswd" type="password" hintText="请输入密码" labelFloat></mu-text-field>
+        <mu-text-field label="密码" v-model="form.pswd" type="password" hintText="请输入密码" labelFloat @keyup.enter.native="onSubmit"></mu-text-field>
       </div>
       <div class="input-group-addon"><i class="fa fa-key"></i></div>
     </div>
@@ -69,8 +69,7 @@ export default {
 //        })
         EventBus.backUrl = ''
         this.$router.replace(backUrl)
-      }, (err) => {
-        console.log(err)
+      }, () => {
 //        this.$message.error(err)
       })
     },

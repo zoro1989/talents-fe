@@ -21,8 +21,7 @@ export default{
       data.createTime = timestampToDateTime(data.createTime)
       data.lastLoginTime = timestampToDateTime(data.lastLoginTime)
       this.form = data
-    }, (err) => {
-      console.log(err)
+    }, () => {
 //      this.$message.error(err)
     })
   },

@@ -1,8 +1,15 @@
 <template>
   <div class="talents-import">
-    人才信息导入(选择Excel文件)
-    <mu-raised-button label="选择文件"  @click="selectFile" primary/>
-    <input type="file" style="display: none" ref="file" @change="onFileChange" />
+    <div>
+      <mu-card>
+        <mu-card-header title="人才信息导入(选择Excel文件)" :subTitle="talentsImportTime">
+        </mu-card-header>
+        <mu-card-text>
+          <mu-raised-button label="选择文件"  @click="selectFile" primary/>
+          <input type="file" style="display: none" ref="file" @change="onFileChange" />
+        </mu-card-text>
+      </mu-card>
+    </div>
     <tkm-loading ref="loading"></tkm-loading>
     <tkm-message ref="message" :message="message"></tkm-message>
   </div>
@@ -11,10 +18,23 @@
   import TkmLoading from 'components/tkm-loading'
   import talentsImport from 'service/talents-import'
   import {messageMinxin} from 'common/js/mixin'
+  import dateTime from 'utilities/timestamp-to-date-time'
   export default {
     mixins: [messageMinxin],
     components: {
       TkmLoading
+    },
+    data() {
+      return {
+        talentsImportTime: ''
+      }
+    },
+    created () {
+      talentsImport.findLastImportTime.bind(this)({}, (data) => {
+        this.talentsImportTime = '最后导入时间：' + dateTime(data.talentsImportTime)
+      }, () => {
+//      this.$message.error(err)
+      })
     },
     methods: {
       selectFile() {
@@ -46,4 +66,6 @@
   }
 </script>
 <style scoped lang="stylus">
+  .mu-card
+    max-width: 500px
 </style>

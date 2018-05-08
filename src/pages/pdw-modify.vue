@@ -6,6 +6,7 @@
     <section class="button-group">
       <mu-raised-button label="确认修改"  @click="onSubmit" primary/>
     </section>
+    <tkm-loading ref="loading"></tkm-loading>
     <tkm-message ref="message" :message="message"></tkm-message>
   </section>
 </template>
@@ -13,8 +14,12 @@
 <script>
 import pwdModify from 'service/pwd-modify'
 import {messageMinxin} from 'common/js/mixin'
+import TkmLoading from 'components/tkm-loading'
 export default{
   mixins: [messageMinxin],
+  components: {
+    TkmLoading
+  },
   data () {
     return {
       form: {
@@ -26,13 +31,14 @@ export default{
   },
   methods: {
     onSubmit () {
+      this.$refs.loading.show()
       pwdModify.save.bind(this)({form: this.form}, (data) => {
+        this.showMsgBox('修改密码成功')
 //        this.$message({
 //          message: data.message,
 //          type: 'success'
 //        })
-      }, (err) => {
-        console.log(err)
+      }, () => {
 //        this.$message.error(err)
       })
     }

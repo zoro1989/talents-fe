@@ -77,8 +77,7 @@ export default {
 //          type: 'success'
 //        })
         this.$router.replace(SUCCESS_URI)
-      }, (err) => {
-        console.log(err)
+      }, () => {
 //        this.$message.error(err)
       })
     },

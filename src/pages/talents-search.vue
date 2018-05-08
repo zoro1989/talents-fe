@@ -165,8 +165,7 @@ export default{
   created () {
     talentsSearch.get.bind(this)({}, (data) => {
       this.info = Object.assign({}, this.info, data)
-    }, (err) => {
-      console.log(err)
+    }, () => {
 //      this.$message.error(err)
     })
   },

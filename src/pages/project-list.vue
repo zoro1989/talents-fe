@@ -97,7 +97,7 @@ export default{
     initData (params, success, fail) {
       projectList.getList.bind(this)({findContent: params.findContent, pageNo: params.pageNo}, (data) => {
         this.tableData = data
-        success(data.message)
+        success()
       }, (err) => {
         fail(err)
       })
@@ -132,7 +132,6 @@ export default{
               row[key] = this.info[key]
             }
             projectList.save.bind(this)({row: row}, (data) => {
-              this.$refs.dialog.hide()
               success(data.message)
             }, (err) => {
               fail(err)
@@ -166,7 +165,6 @@ export default{
               newRow[key] = this.info[key]
             }
             projectList.save.bind(this)({row: newRow}, (data) => {
-              this.$refs.dialog.hide()
               success(data.message)
             }, (err) => {
               fail(err)

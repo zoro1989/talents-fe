@@ -74,7 +74,7 @@ export default{
     initData (params, success, fail) {
       dicList.getList.bind(this)({findContent: params.findContent, pageNo: params.pageNo}, (data) => {
         this.tableData = data
-        success(data.message)
+        success()
       }, (err) => {
         fail(err)
       })
@@ -104,7 +104,6 @@ export default{
             row.parentId = this.dialogForm.dicParent
             row.type = this.dialogForm.dicType
             dicList.save.bind(this)({row: row}, (data) => {
-              this.$refs.dialog.hide()
               success(data.message)
             }, (err) => {
               fail(err)
@@ -139,7 +138,6 @@ export default{
             newRow.dicLabel = this.dialogForm.label
             newRow.parentId = this.dialogForm.dicParent
             dicList.save.bind(this)({row: newRow}, (data) => {
-              this.$refs.dialog.hide()
               success(data.message)
             }, (err) => {
               fail(err)

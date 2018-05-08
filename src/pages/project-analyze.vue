@@ -45,8 +45,7 @@
     created () {
       projectAnalyze.get.bind(this)({}, (data) => {
         this.chartBgData = data
-      }, (err) => {
-        console.log(err)
+      }, () => {
 //      this.$message.error(err)
       })
     },
@@ -68,8 +67,7 @@
           }
           this.makeCharts2(xAxisData, seriesData)
           this.makeCharts3(xAxisData, seriesData)
-        }, (err) => {
-          console.log(err)
+        }, () => {
 //      this.$message.error(err)
         })
       },
